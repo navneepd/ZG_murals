@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zubeen Garg Murals Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ballad trail of Zubeen Garg's Murals</h1>
+            <p class="subtitle">Across the heartland of Assam</p>
+        </header>
+        
+        <div class="content">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            
+            <div class="info-panel">
+                <h2>Mural Information</h2>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-murals">0</div>
+                        <div class="stat-label">Total Murals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="cities-count">0</div>
+                        <div class="stat-label">Cities & Towns</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="artists-count">0</div>
+                        <div class="stat-label">Artists</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="images-count">0</div>
+                        <div class="stat-label">Images</div>
+                    </div>
+                </div>
+                
+                <h3>Murals List</h3>
+                <div class="mural-list" id="mural-list">
+                    <!-- Mural list will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>About</h3>
+            <div class="legend-item">
+                <span>Across the heartland of Assam, public walls and concrete canvases bear the indelible mark of devotion to Zubeen Garg. These sites have transcended mere art to become sacred markers of collective memory, forming a widespread pilgrimage of the heart. Fans travel this 'Ballad Trail' to stand where the image of Zubeen Da is preserved, honoring the voice that articulated their joys, struggles, and identity. This outpouring of public reverence transforms these everyday locations into eternal sanctuaries of the Assamese soul, ensuring his spirit remains a living, breathing presence in the land he sang for. Click on markers to view details about each mural.</span>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Coded by Navneep Das | reated with Leaflet Maps</p>
+            <p>ক্ৰেডিট আৰু মোৰাল দাখিল কৰাৰ বাবে যোগাযোগ কৰক | @das.navneep09@gmail.com</p>
+        </footer>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Project JavaScript Files -->
+    <script src="Murals-list.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
