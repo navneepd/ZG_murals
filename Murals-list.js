@@ -391,7 +391,7 @@ function createImageDisplay(images, muralName) {
     images.forEach(img => {
         const cleanImg = cleanImageFileName(img);
         // Use local images from the images folder
-        const imageUrl = `images/${cleanImg}`;
+        const imageUrl = `Images/${cleanImg}`;
         
         html += `
             <div style="flex: 1; min-width: 120px; text-align: center;">
