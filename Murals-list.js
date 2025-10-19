@@ -97,7 +97,7 @@ const muralData = [
         images: ["Gandhi park.jpg"]
     },
     {
-        name: "Jorhat staidum Murals",
+        name: "Jorhat stadium Murals",
         lat: "26°45'18.42\"N",
         lng: "94°12'21.99\"E",
         locationDesc: "Outside wall of the stadium",
