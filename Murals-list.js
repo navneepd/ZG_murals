@@ -31,7 +31,7 @@ const muralData = [
         lat: "26°54'37.80\"N",
         lng: "94°44'12.15\"E",
         locationDesc: "Dikhow RailwayBridge Pillars)",
-        description: "Portrait painted on the pillars of the railway bridge over the Dikhow River by local youths.",
+        description: "Capturing the charisma of Colonel Zubeen Da, one stroke at a time. The street as a canvas for our legend.",
         artist: "Ankush Nath",
         status: "Marked",
         images: ["Dikhow-railBridge-pillars.jpg"]
@@ -41,7 +41,7 @@ const muralData = [
         lat: "26° 8'34.88\"N",
         lng: "91°47'37.03\"E",
         locationDesc: "Dispur (Guwahati) - Flyover I opposite National Bank For Agriculture & Rural Development",
-        description: "Zubeen da blesssing all His Fans",
+        description: "The unforgettable connection between Zubeen Da and his fans, painted for all to see. His music is his gift, and his outstretched arm is a benediction over his Fans. A gorgeous tribute to the legend who gave his heart to the people.",
         artist: "Neelim Mahanta and Team",
         status: "Marked",
         images: ["Dispur_mural_1.jpg", "Dispur_mural_2.jpg"]
@@ -51,40 +51,20 @@ const muralData = [
         lat: "26° 8'34.34\"N",
         lng: "91°47'37.19\"E",
         locationDesc: "Dispur (Guwahati) - Flyover I opposite National Bank For Agriculture & Rural Development",
-        description: "Long hair classic Zubeen Da",
+        description: "Captured in monochrome, the timeless charisma of Zubeen Da . This mural perfectly represents the prime era of Zubeen Da, reminding us why he is the undisputed voice and style icon for millions. Iconic and unshakeable.",
         artist: "Lukmon Ron",
         status: "Marked",
         images: ["Dispur_mural_3.jpg", "Dispur_mural_4.jpg"]
     },
     {
-        name: "Mon Jai",
+        name: "মন যায় mural",
         lat: "27°16'22.69\"N",
         lng: "94° 5'15.52\"E",
         locationDesc: "North Laximpur bypass road",
-        description: "Mon jai Zubeen da",
+        description: "This incredible mural captures Zubeen Da in his free-spirited, bohemian style. Right beside his compelling gaze is the iconic phrase 'মই জাই' (Mon Jaai),It's a powerful symbol of the voice that speaks for the heart and the restless, rebellious spirit that defines Zubeen Da's enduring legacy in Assam. মন যায়-forever in our hearts.",
         artist: "Neelim Mahanta",
         status: "Marked",
         images: ["North_Lakhimpur.png"]
-    },
-    {
-        name: "Tyagkhetra Mural",
-        lat: "27°14'31.24\"N",
-        lng: "94° 6'18.12\"E",
-        locationDesc: "Inside Tyagkhetra",
-        description: "Zubeen da Pamne moi Ghurai(Will we get him back)",
-        artist: "ANGSUMAN",
-        status: "Marked",
-        images: []
-    },
-    {
-        name: "Zubeen Da Caricature",
-        lat: "26°59'11.31\"N",
-        lng: "94°38'11.11\"E",
-        locationDesc: "Lahoty Petrol Pump in Sivasagar.",
-        description: "A vibrant caricature of Zubeen Garg, capturing his rockstar energy and soulful Assamese spirit. His expressive charm reflects the heartbeat of Assam through music and passion",
-        artist: "Navajit Changmai",
-        status: "Marked",
-        images: []
     },
     {
         name: "The Humming King Mural",
@@ -102,26 +82,26 @@ const muralData = [
         lng: "94°12'21.99\"E",
         locationDesc: "Outside wall of the stadium",
         description: "Various artists came together to paint heartfelt murals in memory of Zubeen Da, celebrating his music, spirit, and legacy",
-        artist: "Various Artists(Reach out to me for credits)",
+        artist: "snigdho & various artist(Reach out to me for credits)",
         status: "Marked",
         images: ["jorhat stadium.jpg"]
     },
     {
-        name: "OG Mon jai",
+        name: "OG মন যায়",
         lat: "26° 8'30.58\"N",
         lng: "91°39'31.44\"E",
         locationDesc: "Assam Engineering College: Hostel-1",
-        description: "A vibrant mural at Assam Engineering College (AEC) pays tribute to Zubeen Garg and the classic film shot on its campus.",
+        description: "A vibrant mural at Assam Engineering College pays tribute to Zubeen Garg and the classic film মন যায় shot on its campus.",
         artist: "(Reach out to me for credit)",
         status: "Marked",
         images: ["AEC guwahti.jpg"]
     },
     {
-        name: "Deep as the Ocean Mural",
+        name: "সাগৰৰ দৰে গভীৰ Mural",
         lat: "26°39'5.76\"N",
         lng: "92°49'27.55\"E",
         locationDesc: "Dolabari flyover: Tezpur",
-        description: "A mesmerizing mural of Zubeen Da singing in the depths of the ocean, symbolizing how his voice flows endlessly like waves. It reflects the depth of his music timeless, soulful, and boundless like the sea itself.",
+        description: "A mesmerizing mural of Zubeen Da singing in the depths of the ocean, symbolizing how his voice flows endlessly like waves. It reflects the depth of his music timeless, soulful, and boundless like the ocean itself.",
         artist: "Runal & team",
         status: "Marked",
         images: ["dolobari.png"]
@@ -131,7 +111,7 @@ const muralData = [
         lat: "27°28'28.28\"N",
         lng: "94°56'30.71\"E",
         locationDesc: "Dibrugarh Convoy Road",
-        description: "Dancing with the storm for decades, his spirit sways to the rhythm of thunder and song- a soul unbroken, turning every tempest into melody",
+        description: "A direct translation of his soul onto the wall. This mural shows Zubeen Da in his element guitar in hand and mic to his lips, a true rockstar whose music and spirit have weathered every storm. Forever our anthem",
         artist: "Chitli & team",
         status: "Marked",
         images: ["Dibrugarh_Mural.png"]
@@ -167,7 +147,7 @@ const muralData = [
         images: ["Gogamukh_Mural.png"]
     },
     {
-        name: "Lord Zubeen Da",
+        name: "Mayabini Mural",
         lat: "27°13'55.25\"N",
         lng: "94° 5'44.37\"E",
         locationDesc: "Lakhimpur Girl's College",
@@ -177,7 +157,7 @@ const muralData = [
         images: ["Lakhimpur_Girls_ College.png"]
     },
     {
-        name: "Zubeen da Mural Stairway to heaven",
+        name: "The Stairway to heaven: Zubeen da Mural ",
         lat: "27° 7'38.71\"N",
         lng: "94°44'23.90\"E",
         locationDesc: "Demow bypass NH-37",
@@ -197,7 +177,7 @@ const muralData = [
         images: ["Joysagar_Bustand_mural.jpg", "Joysagar_Bustand_mural(2).jpg"]
     },
     {
-        name: "Tarali Rati Zubeen da Mural",
+        name: "The Starry Night: Zubeen da Mural",
         lat: "25°59'5.16\"N",
         lng: "90°46'17.95\"E",
         locationDesc: "Dudhnoi: Guwahati-Goalpara Road",
@@ -207,21 +187,21 @@ const muralData = [
         images: ["Dudhnoi_mural_1.jpg", "Dudhnoi mural_2.jpg"]
     },
     {
-        name: "A humble tribute to Zubeen Da",
-        lat: "26° 8'29.92\"N",
-        lng: "91°47'13.00\"E",
-        locationDesc: "",
-        description: "",
+        name: "Zubeen da and His ডটোৰাই”",
+        lat: "26° 8'30.12\"N",
+        lng: "91°47'12.31\"E",
+        locationDesc: "Rajdhani Masjid Circle",
+        description: "তেওঁৰ ডটোৰাই গোধূলিত মায়াবিনী গুণগুণায়,আৰু প্ৰতিটো প্ৰভাতত জিয়া ৰে কাণত কাণে কয় এটা গান,যাৰ অন্ত নাই।",
         artist: "Imam Ali",
         status: "Marked",
-        images: []
+        images: ["Imam_ali.jpg", "Imam_ali_2.jpg"]
     },
     {
-        name: "Mur Kunu Jati Nai: The Zubeen Garg Mural",
+        name: "The Gaze of the Bard: Zubeen Da",
         lat: "26° 9'24.43\"N",
         lng: "91°39'55.20\"E",
         locationDesc: "Guwahati University Market",
-        description: "A beloved mural of Zubeen Da at Guwahati University. Forever the heartbeat of Assam.",
+        description: "Against the striking canvas, Zubeen Da's intense spirit is immortalized alongside the evocative মায়াবিনী ৰাতিৰ বুকুত। In this silent tribute, his unspoken promise resonates: নিজানৰ গান মোৰ শেষ হ’ব ভাবোঁ তোমাৰ বুকুত। A testament to a voice that forever resides in countless hearts.",
         artist: "Kapil Das & Team",
         status: "Marked",
         images: ["GU_market.jpg"]
@@ -234,7 +214,7 @@ const muralData = [
         description: "a visual playlist of the heartbeat of Assam. This wall is a tapestry woven from the threads of his music.",
         artist: "Kapil Das",
         status: "Marked",
-        images: ["Bt campus, Guwahati uni.jpg"]
+        images: ["Bt campus, Guwahati uni.png"]
     },
     {
         name: "The Canvas of Rebellion",
@@ -321,7 +301,7 @@ const muralData = [
         lat: "26°11'16.20\"N",
         lng: "91°44'57.70\"E",
         locationDesc: "Cotton University: RKB Hostel",
-        description: "An intense portrait of a younger Zubeen Garg, featuring his trademark wild hair and a piercing, unforgettable gaze. The expressive, rough brushwork captures the raw passion and energetic spirit of the legendary musician.",
+        description: "An intense portrait of a younger Zubeen Da, featuring his trademark wild hair and a piercing, unforgettable gaze. The expressive, rough brushwork captures the raw passion and energetic spirit of the legendary Zubeen Da.",
         artist: "(Reachout for credit)",
         status: "Marked",
         images: ["RKB_hostel.jpg"]
