@@ -150,7 +150,7 @@ const muralData = [
         name: "Rockstar Zubeen Da 2",
         lat: "27°32'35.68\"N",
         lng: "94°15'21.77\"E",
-        locationDesc: "NHPC,Gogamukh: Gupta bridge",
+        locationDesc: "NHPC, Gogamukh: Gupta bridge",
         description: "The artwork celebrates his fearless spirit, musical legacy, and the enduring impact he has left on fans and culture alike.",
         artist: "Mino_patir",
         status: "Marked",
