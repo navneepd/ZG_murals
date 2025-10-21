@@ -140,7 +140,7 @@ const muralData = [
         name: "Zubeen Da Caricature",
         lat: "26°59'11.31\"N",
         lng: "94°38'11.11\"E",
-        locationDesc: "Lahoty Petrol Pump in Sivasagar.",
+        locationDesc: "Lahoty Petrol Pump in Sivasagar",
         description: "A vibrant caricature of Zubeen Garg, capturing his rockstar energy and soulful Assamese spirit. His expressive charm reflects the heartbeat of Assam through music and passion",
         artist: "Navajit Changmai",
         status: "Marked",
