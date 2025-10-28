@@ -1,14 +1,4 @@
-// Debug test
-console.log("=== DEBUG START ===");
-console.log("app.js is loading");
-console.log("Leaflet available:", typeof L !== 'undefined');
-console.log("muralData available:", typeof muralData !== 'undefined');
-if (typeof muralData !== 'undefined') {
-    console.log("Murals count:", muralData.length);
-    console.log("First mural:", muralData[0]);
-}
-console.log("=== DEBUG END ===");
-// app.js - SIMPLIFIED VERSION
+// app.js - With side-by-side images for multiple images
 console.log("🚀 app.js started loading");
 
 let map;
@@ -18,7 +8,6 @@ let fullscreenPopup = null;
 document.addEventListener('DOMContentLoaded', function() {
     console.log("📄 DOM loaded, initializing app...");
     
-    // Check requirements
     if (typeof L === 'undefined') {
         console.error("❌ Leaflet not loaded");
         return;
@@ -44,7 +33,6 @@ function initializeApp() {
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
     
-    console.log("📊 Setting up statistics...");
     // Statistics
     const stats = calculateStats();
     document.getElementById('total-murals').textContent = stats.totalMurals;
@@ -52,8 +40,7 @@ function initializeApp() {
     document.getElementById('artists-count').textContent = stats.artistsCount;
     document.getElementById('images-count').textContent = stats.imagesCount;
     
-    console.log("🎨 Creating mural list and markers...");
-    // Create list and markers
+    // Create mural list and markers
     const muralList = document.getElementById('mural-list');
     
     muralData.forEach((mural, index) => {
@@ -66,7 +53,6 @@ function initializeApp() {
         `;
         
         item.addEventListener('click', function() {
-            console.log("📱 Clicked mural:", mural.name);
             focusOnMural(mural, index);
         });
         
@@ -77,26 +63,84 @@ function initializeApp() {
         const lng = dmsToDecimal(mural.lng);
         
         if (lat && lng) {
-            const color = getMarkerColor(mural.locationDesc);
             const marker = L.marker([lat, lng]).addTo(map);
             
-            const popupContent = `
-                <div class="popup-content">
-                    <h3>${mural.name}</h3>
-                    <p><strong>Location:</strong> ${mural.locationDesc}</p>
-                    <p><strong>Artist:</strong> ${mural.artist}</p>
-                    <p><strong>Description:</strong> ${mural.description}</p>
-                    <button class="fullscreen-btn" onclick="openFullscreen(${index})">
-                        📱 Fullscreen View
-                    </button>
-                </div>
-            `;
+            const popupContent = createPopupContent(mural, index);
             
-            marker.bindPopup(popupContent);
+            marker.bindPopup(popupContent, {
+                className: 'centered-popup'
+            });
         }
     });
     
     console.log("✅ App initialized successfully!");
+}
+
+// Create centered popup content with side-by-side images
+function createPopupContent(mural, index) {
+    return `
+        <div class="popup-content">
+            <!-- Mural Name - Centered -->
+            <h3 class="popup-title">${mural.name}</h3>
+            
+            <!-- Images - Side by side if multiple -->
+            <div class="popup-image-container">
+                ${createPopupImages(mural.images, mural.name, index)}
+            </div>
+            
+            <!-- Artist Name - Centered -->
+            <div class="popup-artist">
+                <strong>Artist:</strong> ${mural.artist || 'Unknown'}
+            </div>
+            
+            <!-- Description - Centered -->
+            <div class="popup-description">
+                <strong>Description:</strong> ${mural.description}
+            </div>
+            
+            <!-- Location - Centered -->
+            <div class="popup-location">
+                <strong>Location:</strong> ${mural.locationDesc}
+            </div>
+            
+            <!-- Fullscreen Button - Centered -->
+            <button class="fullscreen-btn" onclick="openFullscreen(${index})">
+                📱 Fullscreen View
+            </button>
+        </div>
+    `;
+}
+
+// Create popup images layout
+function createPopupImages(images, muralName, index) {
+    if (!images || images.length === 0) {
+        return '<p class="no-image">No image available</p>';
+    }
+    
+    // Single image
+    if (images.length === 1) {
+        return `
+            <img src="Images/${cleanImageFileName(images[0])}" 
+                 alt="${muralName}" 
+                 class="popup-main-image single-image"
+                 onclick="openFullscreen(${index})">
+        `;
+    }
+    
+    // Multiple images - side by side
+    return `
+        <div class="popup-images-grid">
+            ${images.map((img, imgIndex) => `
+                <div class="popup-image-item">
+                    <img src="Images/${cleanImageFileName(img)}" 
+                         alt="${muralName}" 
+                         class="popup-grid-image"
+                         onclick="openFullscreen(${index})">
+                    ${images.length > 1 ? `<div class="image-counter">${imgIndex + 1}/${images.length}</div>` : ''}
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 function focusOnMural(mural, index) {
@@ -127,7 +171,7 @@ function focusOnMural(mural, index) {
     }
 }
 
-// Make this function global so it can be called from popup
+// Fullscreen functions
 window.openFullscreen = function(index) {
     console.log("🖥️ Opening fullscreen for mural index:", index);
     const mural = muralData[index];
@@ -139,34 +183,27 @@ window.openFullscreen = function(index) {
     
     // Create fullscreen overlay
     fullscreenPopup = document.createElement('div');
-    fullscreenPopup.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 10000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    `;
+    fullscreenPopup.className = 'fullscreen-popup';
     
     fullscreenPopup.innerHTML = `
-        <div style="background: white; padding: 20px; border-radius: 10px; max-width: 90%; max-height: 90%; overflow: auto; position: relative;">
-            <button onclick="closeFullscreen()" style="position: absolute; top: 10px; right: 15px; background: red; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">×</button>
-            <h2>${mural.name}</h2>
-            <p><strong>Location:</strong> ${mural.locationDesc}</p>
-            <p><strong>Artist:</strong> ${mural.artist}</p>
-            <p><strong>Description:</strong> ${mural.description}</p>
-            <div style="margin-top: 15px;">
-                ${mural.images.map(img => `
-                    <div style="margin-bottom: 15px; text-align: center;">
-                        <img src="Images/${img}" style="max-width: 100%; max-height: 300px; border-radius: 5px;">
-                        <div style="font-size: 12px; color: #666; margin-top: 5px;">${img}</div>
-                    </div>
-                `).join('')}
+        <div class="fullscreen-content">
+            <button class="close-fullscreen-btn" onclick="closeFullscreen()">×</button>
+            <h2 class="fullscreen-title">${mural.name}</h2>
+            
+            <div class="fullscreen-image-container">
+                ${createFullscreenImages(mural.images, mural.name)}
+            </div>
+            
+            <div class="fullscreen-details">
+                <div class="fullscreen-artist">
+                    <strong>Artist:</strong> ${mural.artist || 'Unknown'}
+                </div>
+                <div class="fullscreen-description">
+                    <strong>Description:</strong> ${mural.description}
+                </div>
+                <div class="fullscreen-location">
+                    <strong>Location:</strong> ${mural.locationDesc}
+                </div>
             </div>
         </div>
     `;
@@ -177,6 +214,39 @@ window.openFullscreen = function(index) {
     // Close popup on map
     map.closePopup();
 };
+
+// Create fullscreen images layout
+function createFullscreenImages(images, muralName) {
+    if (!images || images.length === 0) {
+        return '<p class="no-image">No image available</p>';
+    }
+    
+    // Single image in fullscreen
+    if (images.length === 1) {
+        return `
+            <div class="fullscreen-image-item">
+                <img src="Images/${cleanImageFileName(images[0])}" 
+                     alt="${muralName}" 
+                     class="fullscreen-image single-image">
+                <div class="image-caption">${cleanImageFileName(images[0])}</div>
+            </div>
+        `;
+    }
+    
+    // Multiple images in fullscreen - side by side
+    return `
+        <div class="fullscreen-images-grid">
+            ${images.map(img => `
+                <div class="fullscreen-image-item">
+                    <img src="Images/${cleanImageFileName(img)}" 
+                         alt="${muralName}" 
+                         class="fullscreen-grid-image">
+                    <div class="image-caption">${cleanImageFileName(img)}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
 
 window.closeFullscreen = function() {
     if (fullscreenPopup) {
