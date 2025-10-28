@@ -1,7 +1,8 @@
-// app.js - Optimized for mobile with auto-scroll and popup positioning
+// app.js - Optimized for mobile with auto-scroll, popup positioning, and fullscreen popups
 
 let map;
 let userLocationMarker = null;
+let fullscreenPopup = null;
 
 // Custom marker icon function
 function createCustomIcon(color) {
@@ -21,6 +22,86 @@ function scrollToMap() {
             behavior: 'smooth', 
             block: 'start'
         });
+    }
+}
+
+// Create fullscreen popup
+function createFullscreenPopup(mural) {
+    // Remove existing fullscreen popup
+    if (fullscreenPopup) {
+        document.body.removeChild(fullscreenPopup);
+    }
+    
+    // Create fullscreen overlay
+    fullscreenPopup = document.createElement('div');
+    fullscreenPopup.className = 'fullscreen-popup';
+    fullscreenPopup.innerHTML = `
+        <div class="fullscreen-popup-content">
+            <button class="close-fullscreen-btn">&times;</button>
+            <h2>${mural.name}</h2>
+            ${mural.locationDesc ? `<p><strong>Location:</strong> ${mural.locationDesc}</p>` : ''}
+            ${mural.description ? `<p><strong>Description:</strong> ${mural.description}</p>` : ''}
+            ${mural.artist ? `<p><strong>Artist:</strong> ${mural.artist}</p>` : ''}
+            <div class="fullscreen-images">
+                ${createFullscreenImages(mural.images, mural.name)}
+            </div>
+        </div>
+    `;
+    
+    // Add close event
+    const closeBtn = fullscreenPopup.querySelector('.close-fullscreen-btn');
+    closeBtn.addEventListener('click', closeFullscreenPopup);
+    
+    // Add click outside to close
+    fullscreenPopup.addEventListener('click', function(e) {
+        if (e.target === fullscreenPopup) {
+            closeFullscreenPopup();
+        }
+    });
+    
+    // Add escape key to close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && fullscreenPopup) {
+            closeFullscreenPopup();
+        }
+    });
+    
+    document.body.appendChild(fullscreenPopup);
+    
+    // Prevent body scroll when fullscreen popup is open
+    document.body.style.overflow = 'hidden';
+}
+
+// Create fullscreen images HTML
+function createFullscreenImages(images, muralName) {
+    if (!images || images.length === 0) {
+        return '<p><em>No images available</em></p>';
+    }
+    
+    let html = '<div class="fullscreen-image-gallery">';
+    
+    images.forEach(img => {
+        const cleanImg = cleanImageFileName(img);
+        const imageUrl = `Images/${cleanImg}`;
+        
+        html += `
+            <div class="fullscreen-image-item">
+                <img src="${imageUrl}" alt="${muralName}" class="fullscreen-image">
+                <div class="image-caption">${cleanImg}</div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    return html;
+}
+
+// Close fullscreen popup
+function closeFullscreenPopup() {
+    if (fullscreenPopup) {
+        document.body.removeChild(fullscreenPopup);
+        fullscreenPopup = null;
+        document.body.style.overflow = ''; // Restore scrolling
     }
 }
 
@@ -89,7 +170,7 @@ function initApp() {
                 icon: createCustomIcon(markerColor)
             }).addTo(map);
             
-            // Create popup content
+            // Create popup content with fullscreen button
             const popupContent = `
                 <div class="popup-content">
                     <h3>${mural.name}</h3>
@@ -97,6 +178,11 @@ function initApp() {
                     <p><strong>Description:</strong> ${mural.description || 'No description'}</p>
                     <p><strong>Artist:</strong> ${mural.artist || 'Unknown'}</p>
                     ${createImageDisplay(mural.images, mural.name)}
+                    <div class="popup-actions">
+                        <button class="fullscreen-btn" data-mural-index="${index}">
+                            📱 Fullscreen View
+                        </button>
+                    </div>
                 </div>
             `;
             
@@ -105,6 +191,18 @@ function initApp() {
                 className: 'custom-popup',
                 autoPan: true,
                 autoPanPadding: [50, 50]
+            });
+            
+            // Add event listener for fullscreen button after popup opens
+            marker.on('popupopen', function() {
+                const fullscreenBtn = document.querySelector('.fullscreen-btn');
+                if (fullscreenBtn) {
+                    fullscreenBtn.addEventListener('click', function() {
+                        const muralIndex = this.getAttribute('data-mural-index');
+                        createFullscreenPopup(muralData[muralIndex]);
+                        map.closePopup(); // Close the small popup
+                    });
+                }
             });
             
             markers[index] = marker;

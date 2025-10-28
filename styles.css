@@ -305,3 +305,151 @@ footer {
         height: 600px;
     }
 }
+/* Fullscreen Popup Styles */
+.fullscreen-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.fullscreen-popup-content {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: slideUp 0.3s ease;
+}
+
+.close-fullscreen-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+
+.close-fullscreen-btn:hover {
+    background: #c0392b;
+}
+
+.fullscreen-popup-content h2 {
+    color: #1a2a6c;
+    margin-bottom: 15px;
+    padding-right: 40px;
+    font-size: 1.5rem;
+}
+
+.fullscreen-popup-content p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.fullscreen-image-gallery {
+    margin-top: 20px;
+}
+
+.fullscreen-image-item {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.fullscreen-image {
+    max-width: 100%;
+    max-height: 60vh;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.image-caption {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Popup Actions */
+.popup-actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.fullscreen-btn {
+    background: #1a2a6c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+.fullscreen-btn:hover {
+    background: #0d1a4d;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile optimizations for fullscreen */
+@media (max-width: 768px) {
+    .fullscreen-popup-content {
+        padding: 20px 15px;
+        max-width: 95%;
+        max-height: 95%;
+    }
+    
+    .fullscreen-popup-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .fullscreen-image {
+        max-height: 50vh;
+    }
+    
+    .close-fullscreen-btn {
+        top: 10px;
+        right: 15px;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}
