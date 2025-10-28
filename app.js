@@ -68,29 +68,11 @@ function initApp() {
             console.log(`Clicked mural: ${mural.name}`, {lat, lng});
             
             if (lat && lng) {
-                // Scroll to map container on mobile
-                scrollToMap();
-                
-                // Set map view with optimal zoom and padding for popup visibility
-                map.setView([lat, lng], 15, {
-                    animate: true,
-                    duration: 0.8
-                });
-                
-                // Open popup after a short delay to ensure map has moved
-                setTimeout(() => {
-                    const marker = markers[index];
-                    if (marker) {
-                        // Close any existing popups first
-                        map.closePopup();
-                        
-                        // Open the popup with optimal positioning
-                        marker.openPopup();
-                        
-                        // Adjust map view to ensure popup is fully visible
-                        adjustMapForPopup(marker, lat, lng);
-                    }
-                }, 600);
+                map.setView([lat, lng], 13);
+                const marker = markers[index];
+                if (marker) {
+                    marker.openPopup();
+                }
             } else {
                 console.warn('Invalid coordinates for mural:', mural.name);
             }
@@ -137,17 +119,7 @@ function initApp() {
             
             marker.bindPopup(popupContent, { 
                 maxWidth: 500,
-                className: 'custom-popup',
-                autoPan: true, // Automatically pan the map when popup opens
-                autoPanPadding: [20, 20], // Padding to ensure popup is fully visible
-                closeOnEscapeKey: true,
-                autoClose: false
-            });
-            
-            // Add click event to marker for better mobile experience
-            marker.on('click', function() {
-                scrollToMap();
-                adjustMapForPopup(marker, lat, lng);
+                className: 'custom-popup'
             });
             
             markers[index] = marker;
@@ -164,55 +136,6 @@ function initApp() {
     
     // Initialize mobile controls
     initMobileControls();
-}
-
-// Function to scroll to map container
-function scrollToMap() {
-    const mapContainer = document.querySelector('.map-container');
-    if (mapContainer) {
-        // Use smooth scrolling for better UX
-        mapContainer.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start',
-            inline: 'nearest'
-        });
-        
-        // Additional offset for fixed headers if any
-        const headerHeight = document.querySelector('header')?.offsetHeight || 0;
-        window.scrollBy(0, -headerHeight - 20);
-    }
-}
-
-// Function to adjust map view for optimal popup visibility
-function adjustMapForPopup(marker, lat, lng) {
-    // Get the current map bounds and size
-    const mapBounds = map.getBounds();
-    const mapSize = map.getSize();
-    
-    // Calculate optimal view with padding
-    const padding = 100; // pixels of padding
-    
-    // Create a bounds that includes the marker with some padding
-    const adjustedBounds = L.latLngBounds(
-        [lat - 0.005, lng - 0.005],
-        [lat + 0.005, lng + 0.005]
-    );
-    
-    // Fit the map to show the marker with context, but not too zoomed out
-    if (mapSize.x < 768) { // Mobile device
-        map.setView([lat, lng], 15, {
-            animate: true,
-            duration: 0.5
-        });
-    } else {
-        // For larger screens, use fitBounds with padding
-        map.fitBounds(adjustedBounds, {
-            padding: [padding, padding],
-            animate: true,
-            duration: 0.5,
-            maxZoom: 16
-        });
-    }
 }
 
 // Initialize mobile-specific controls
@@ -239,9 +162,6 @@ function initMobileControls() {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     
-                    // Scroll to map
-                    scrollToMap();
-                    
                     // Remove previous location marker
                     if (userLocationMarker) {
                         map.removeLayer(userLocationMarker);
@@ -254,11 +174,8 @@ function initMobileControls() {
                     
                     userLocationMarker.bindPopup('Your current location').openPopup();
                     
-                    // Center map on user location with optimal zoom
-                    map.setView([lat, lng], 13, {
-                        animate: true,
-                        duration: 0.8
-                    });
+                    // Center map on user location
+                    map.setView([lat, lng], 13);
                     
                     document.getElementById('locate-me').textContent = 'Locate Me';
                 },
@@ -290,15 +207,7 @@ function initMobileControls() {
     window.addEventListener('orientationchange', function() {
         setTimeout(function() {
             map.invalidateSize();
-            // Re-center the map if there's an open popup
-            const center = map.getCenter();
-            map.setView(center, map.getZoom());
         }, 200);
-    });
-    
-    // Close popup when clicking on the map (outside popup)
-    map.on('click', function() {
-        map.closePopup();
     });
 }
 
