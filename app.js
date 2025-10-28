@@ -1,4 +1,4 @@
-// app.js - Main application logic
+// app.js - Main application logic with mobile optimizations
 
 // Define createCustomIcon at the top level
 function createCustomIcon(color) {
@@ -9,6 +9,11 @@ function createCustomIcon(color) {
         iconAnchor: [11, 11]
     });
 }
+
+// Mobile-specific variables
+let map;
+let userLocationMarker = null;
+let isListVisible = true;
 
 // Initialize the application
 function initApp() {
@@ -29,7 +34,7 @@ function initApp() {
     console.log('Mural data loaded:', muralData.length, 'murals');
 
     // Initialize the map
-    const map = L.map('map').setView([26.5, 92.5], 8);
+    map = L.map('map').setView([26.5, 92.5], 8);
     console.log('Map initialized');
 
     // Add tile layer
@@ -128,6 +133,82 @@ function initApp() {
     });
     
     console.log(`Successfully created ${markersCreated} out of ${muralData.length} markers`);
+    
+    // Initialize mobile controls
+    initMobileControls();
+}
+
+// Initialize mobile-specific controls
+function initMobileControls() {
+    // Toggle list visibility
+    document.getElementById('toggle-list').addEventListener('click', function() {
+        const infoPanel = document.querySelector('.info-panel');
+        if (isListVisible) {
+            infoPanel.style.display = 'none';
+            this.textContent = 'Show List';
+        } else {
+            infoPanel.style.display = 'block';
+            this.textContent = 'Hide List';
+        }
+        isListVisible = !isListVisible;
+    });
+    
+    // Locate me functionality
+    document.getElementById('locate-me').addEventListener('click', function() {
+        if (navigator.geolocation) {
+            this.textContent = 'Locating...';
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    // Remove previous location marker
+                    if (userLocationMarker) {
+                        map.removeLayer(userLocationMarker);
+                    }
+                    
+                    // Add new location marker
+                    userLocationMarker = L.marker([lat, lng], {
+                        icon: createCustomIcon('#ff0000')
+                    }).addTo(map);
+                    
+                    userLocationMarker.bindPopup('Your current location').openPopup();
+                    
+                    // Center map on user location
+                    map.setView([lat, lng], 13);
+                    
+                    document.getElementById('locate-me').textContent = 'Locate Me';
+                },
+                function(error) {
+                    console.error('Error getting location:', error);
+                    alert('Unable to get your location. Please check your device settings.');
+                    document.getElementById('locate-me').textContent = 'Locate Me';
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000
+                }
+            );
+        } else {
+            alert('Geolocation is not supported by your browser.');
+        }
+    });
+    
+    // Add touch gesture for map (prevent default behavior)
+    const mapElement = document.getElementById('map');
+    mapElement.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Handle orientation changes
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 200);
+    });
 }
 
 // Initialize the app when the DOM is loaded
