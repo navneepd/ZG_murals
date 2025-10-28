@@ -453,3 +453,18 @@ footer {
         font-size: 20px;
     }
 }
+/* Fullscreen Popup - Minimal Version */
+.fullscreen-btn {
+    background: #1a2a6c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.fullscreen-btn:hover {
+    background: #0d1a4d;
+}
