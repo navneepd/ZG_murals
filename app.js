@@ -85,7 +85,7 @@ function initializeApp() {
                     <h3>${mural.name}</h3>
                     <p><strong>Location:</strong> ${mural.locationDesc}</p>
                     <p><strong>Artist:</strong> ${mural.artist}</p>
-                    <p>${mural.description}</p> ${mural.description}</p>
+                    <p><strong>Description:</strong> ${mural.description}</p>
                     <button class="fullscreen-btn" onclick="openFullscreen(${index})">
                         📱 Fullscreen View
                     </button>
