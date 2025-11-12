@@ -3,6 +3,7 @@ console.log("🚀 app.js started loading");
 
 let map;
 let fullscreenPopup = null;
+let markersGroup = null;
 
 // Wait for everything to load
 document.addEventListener('DOMContentLoaded', function() {
@@ -42,6 +43,9 @@ function initializeApp() {
     
     // Create mural list and markers
     const muralList = document.getElementById('mural-list');
+
+    // Create a marker cluster group to handle overlapping markers
+    markersGroup = L.markerClusterGroup();
     
     muralData.forEach((mural, index) => {
         // Create list item
@@ -63,16 +67,21 @@ function initializeApp() {
         const lng = dmsToDecimal(mural.lng);
         
         if (lat && lng) {
-            const marker = L.marker([lat, lng]).addTo(map);
+            const marker = L.marker([lat, lng]);
             
             const popupContent = createPopupContent(mural, index);
             
             marker.bindPopup(popupContent, {
                 className: 'centered-popup'
             });
+
+            // Add marker to the cluster group (not directly to the map)
+            markersGroup.addLayer(marker);
         }
     });
-    
+    // Add clustered markers to the map
+    map.addLayer(markersGroup);
+
     console.log("✅ App initialized successfully!");
 }
 
@@ -158,15 +167,34 @@ function focusOnMural(mural, index) {
         
         // Open popup after delay
         setTimeout(() => {
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.Marker) {
-                    const markerLat = layer.getLatLng().lat;
-                    const markerLng = layer.getLatLng().lng;
-                    if (Math.abs(markerLat - lat) < 0.001 && Math.abs(markerLng - lng) < 0.001) {
-                        layer.openPopup();
+            // Prefer searching markers in the global markersGroup (markercluster)
+            let opened = false;
+            if (markersGroup && typeof markersGroup.eachLayer === 'function') {
+                markersGroup.eachLayer(function(subLayer) {
+                    if (subLayer instanceof L.Marker) {
+                        const mLat = subLayer.getLatLng().lat;
+                        const mLng = subLayer.getLatLng().lng;
+                        if (!opened && Math.abs(mLat - lat) < 0.0005 && Math.abs(mLng - lng) < 0.0005) {
+                            subLayer.openPopup();
+                            opened = true;
+                        }
                     }
-                }
-            });
+                });
+            }
+
+            // Fallback: check all map layers
+            if (!opened) {
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.Marker) {
+                        const markerLat = layer.getLatLng().lat;
+                        const markerLng = layer.getLatLng().lng;
+                        if (!opened && Math.abs(markerLat - lat) < 0.0005 && Math.abs(markerLng - lng) < 0.0005) {
+                            layer.openPopup();
+                            opened = true;
+                        }
+                    }
+                });
+            }
         }, 800);
     }
 }

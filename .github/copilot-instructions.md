@@ -110,3 +110,6 @@ Note: this repo is static and uses only client-side JS and CDN-hosted Leaflet; n
    - If image filename contains spaces, verify `cleanImageFileName()` will normalize it or rename the file to avoid spaces.
 
 If you'd like, I can add a tiny validation script (Node or Python) that verifies each `muralData` entry has valid DMS coords and existing image files — tell me which language you prefer and I'll add it.
+
+## Note about marker clustering
+- This project now uses Leaflet.markercluster (CDN includes added to `index.html`) to improve UX for nearby/overlapping markers (e.g., the Dispur flyover murals). Marker clustering handles grouping and spiderfying overlapping markers on click. If you modify marker creation logic, update `app.js` where markers are added to the `markersGroup` cluster.
