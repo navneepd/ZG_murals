@@ -27,16 +27,6 @@ function dmsToDecimal(dms) {
 // Mural data from the Excel file
 const muralData = [
     {
-        name: "Colonel Zubeen Da",
-        lat: "26°54'37.80\"N",
-        lng: "94°44'12.15\"E",
-        locationDesc: "Dikhow RailwayBridge Pillars)",
-        description: "Capturing the charisma of Colonel Zubeen Da, one stroke at a time. The street as a canvas for our legend.",
-        artist: "Ankush Nath",
-        status: "Marked",
-        images: ["Dikhow-railBridge-pillars.jpg"]
-    },
-    {
         name: "Zubeen Da's Blessing",
         lat: "26° 8'34.88\"N",
         lng: "91°47'37.03\"E",
@@ -47,16 +37,6 @@ const muralData = [
         images: ["Dispur_mural_1.jpg", "Dispur_mural_2.jpg"]
     },
     {
-        name: "Long hair Zubeen Da Mural",
-        lat: "26° 8'34.34\"N",
-        lng: "91°47'37.19\"E",
-        locationDesc: "Dispur (Guwahati) - Flyover I opposite National Bank For Agriculture & Rural Development",
-        description: "Captured in monochrome, the timeless charisma of Zubeen Da . This mural perfectly represents the prime era of Zubeen Da, reminding us why he is the undisputed voice and style icon for millions. Iconic and unshakeable.",
-        artist: "Lukmon Ron",
-        status: "Marked",
-        images: ["Dispur_mural_3.jpg", "Dispur_mural_4.jpg"]
-    },
-    {
         name: "মন যায় mural",
         lat: "27°16'22.69\"N",
         lng: "94° 5'15.52\"E",
@@ -65,6 +45,16 @@ const muralData = [
         artist: "Neelim Mahanta",
         status: "Marked",
         images: ["North_Lakhimpur.png"]
+    },
+       {
+        name: "The Voice of the Brahmaputra",
+        lat: "27°41'1.02\"N",
+        lng: "94°48'33.80\"E",
+        locationDesc: "L.M.T. Sr. Secondary SCHOOL, DIMOW College Road, Chariali, Dimow, Dhemaji District, Assam",
+        description: "This exquisite artwork is a vibrant tribute to Zubeen Da's connection to his land. He is pictured wearing a traditional Jaapi (Assamese conical hat) and singing passionately, with a collage of Assam's seasonal landscapes forming the background. It celebrates him as the true voice of the state's nature and culture.",
+        artist: "mino_patir,Ruhiteswar_Moran, Gobin_Taye & na.kull",
+        status: "Marked",
+        images: ["Mino_dhemaji mural.png"]
     },
     {
         name: "The Humming King Mural",
@@ -326,16 +316,26 @@ const muralData = [
         status: "Marked",
         images: ["RKB_hostel.jpg"]
     },
-    {
-        name: "The Voice of the Brahmaputra",
-        lat: "27°41'1.02\"N",
-        lng: "94°48'33.80\"E",
-        locationDesc: "L.M.T. Sr. Secondary SCHOOL, DIMOW College Road, Chariali, Dimow, Dhemaji District, Assam",
-        description: "This exquisite artwork is a vibrant tribute to Zubeen Da's connection to his land. He is pictured wearing a traditional Jaapi (Assamese conical hat) and singing passionately, with a collage of Assam's seasonal landscapes forming the background. It celebrates him as the true voice of the state's nature and culture.",
-        artist: "mino_patir,Ruhiteswar_Moran, Gobin_Taye & na.kull",
+       {
+        name: "Long hair Zubeen Da Mural",
+        lat: "26° 8'34.34\"N",
+        lng: "91°47'37.19\"E",
+        locationDesc: "Dispur (Guwahati) - Flyover I opposite National Bank For Agriculture & Rural Development",
+        description: "Captured in monochrome, the timeless charisma of Zubeen Da . This mural perfectly represents the prime era of Zubeen Da, reminding us why he is the undisputed voice and style icon for millions. Iconic and unshakeable.",
+        artist: "Lukmon Ron",
         status: "Marked",
-        images: ["Mino_dhemaji mural.png"]
-    }
+        images: ["Dispur_mural_3.jpg", "Dispur_mural_4.jpg"]
+    },
+        {
+        name: "Colonel Zubeen Da",
+        lat: "26°54'37.80\"N",
+        lng: "94°44'12.15\"E",
+        locationDesc: "Dikhow RailwayBridge Pillars)",
+        description: "Capturing the charisma of Colonel Zubeen Da, one stroke at a time. The street as a canvas for our legend.",
+        artist: "Ankush Nath",
+        status: "Marked",
+        images: ["Dikhow-railBridge-pillars.jpg"]
+    },
 ];
 
 // Function to determine marker color based on location
