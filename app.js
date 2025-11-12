@@ -68,11 +68,24 @@ function initializeApp() {
         
         if (lat && lng) {
             const marker = L.marker([lat, lng]);
-            
-            const popupContent = createPopupContent(mural, index);
-            
-            marker.bindPopup(popupContent, {
+
+            // Bind a lightweight placeholder popup and generate full content only when opened
+            marker.bindPopup('<div class="popup-loading">Loading…</div>', {
                 className: 'centered-popup'
+            });
+
+            // When the popup opens, generate the full content (reduces startup cost on mobile)
+            marker.on('popupopen', function () {
+                try {
+                    // Only set content if it's still the placeholder (avoid regenerating)
+                    const current = marker.getPopup().getContent();
+                    if (!current || typeof current === 'string' && current.indexOf('popup-loading') !== -1) {
+                        const content = createPopupContent(mural, index);
+                        marker.setPopupContent(content);
+                    }
+                } catch (e) {
+                    // ignore errors in rare edge cases
+                }
             });
 
             // Add marker to the cluster group (not directly to the map)
@@ -132,6 +145,7 @@ function createPopupImages(images, muralName, index) {
             <img src="Images/${cleanImageFileName(images[0])}" 
                  alt="${muralName}" 
                  class="popup-main-image single-image"
+                 loading="lazy"
                  onclick="openFullscreen(${index})">
         `;
     }
@@ -141,10 +155,11 @@ function createPopupImages(images, muralName, index) {
         <div class="popup-images-grid">
             ${images.map((img, imgIndex) => `
                 <div class="popup-image-item">
-                    <img src="Images/${cleanImageFileName(img)}" 
-                         alt="${muralName}" 
-                         class="popup-grid-image"
-                         onclick="openFullscreen(${index})">
+                <img src="Images/${cleanImageFileName(img)}" 
+                    alt="${muralName}" 
+                    class="popup-grid-image"
+                    loading="lazy"
+                    onclick="openFullscreen(${index})">
                     ${images.length > 1 ? `<div class="image-counter">${imgIndex + 1}/${images.length}</div>` : ''}
                 </div>
             `).join('')}
@@ -255,7 +270,8 @@ function createFullscreenImages(images, muralName) {
             <div class="fullscreen-image-item">
                 <img src="Images/${cleanImageFileName(images[0])}" 
                      alt="${muralName}" 
-                     class="fullscreen-image single-image">
+                     class="fullscreen-image single-image"
+                     loading="lazy">
                 <div class="image-caption">${cleanImageFileName(images[0])}</div>
             </div>
         `;
@@ -266,9 +282,10 @@ function createFullscreenImages(images, muralName) {
         <div class="fullscreen-images-grid">
             ${images.map(img => `
                 <div class="fullscreen-image-item">
-                    <img src="Images/${cleanImageFileName(img)}" 
-                         alt="${muralName}" 
-                         class="fullscreen-grid-image">
+                <img src="Images/${cleanImageFileName(img)}" 
+                    alt="${muralName}" 
+                    class="fullscreen-grid-image"
+                    loading="lazy">
                     <div class="image-caption">${cleanImageFileName(img)}</div>
                 </div>
             `).join('')}
