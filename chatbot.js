@@ -1,16 +1,57 @@
-// chatbot.js - AI Chatbot for locating nearby murals
+// chatbot.js - ZG Chronicle Bot with Interesting Facts about Murals
 
 class MuralChatbot {
     constructor() {
         this.conversationHistory = [];
         this.userLocation = null;
+        this.factsShared = [];
         this.initializeChatbot();
     }
 
     initializeChatbot() {
         this.createChatbotUI();
         this.attachEventListeners();
-        console.log("🤖 Mural Chatbot initialized");
+        console.log("🎸 ZG Chronicle initialized");
+    }
+
+    // Knowledge base of interesting facts about murals
+    getMuralFacts() {
+        return {
+            facts: [
+                { emoji: "🎵", fact: "Zubeen Garg has recorded over 1000+ songs in Assamese, Hindi, English, and other languages, making him one of the most prolific musicians in India." },
+                { emoji: "🏛️", fact: "The murals across Assam represent over 50+ artists collaborating to celebrate Zubeen Da's legacy and cultural impact on the state." },
+                { emoji: "📍", fact: "Zubeen Garg murals are spread across 8+ districts of Assam - from Guwahati to Dhemaji, creating a 'Ballad Trail' of artistic tributes." },
+                { emoji: "🎨", fact: "Each mural tells a unique story - some capture him in concert mode, others show him as a cultural revolutionary and poet." },
+                { emoji: "❤️", fact: "Fans travel from across Assam and India to visit these murals, turning them into pilgrimage sites of cultural reverence." },
+                { emoji: "🎭", fact: "The largest murals are 12x15 feet, taking months to complete and requiring teams of 5-10 skilled artists." },
+                { emoji: "🌟", fact: "Zubeen Garg's activism transcends music - he's been a voice for social causes, which is reflected in murals like 'Che Guevara of Assam'." },
+                { emoji: "📸", fact: "Over 60+ high-quality images of these murals are now documented, creating a digital archive of Assam's street art culture." },
+                { emoji: "🎸", fact: "His iconic instruments (guitar, keyboard) appear in nearly every mural, symbolizing music as his life force." },
+                { emoji: "🌍", fact: "The 'Comrade Never Die' mural stands as a testament to how Zubeen's spirit lives on through his art and activism." },
+                { emoji: "🏞️", fact: "Locations range from busy highways to serene college campuses - murals bring Zubeen's presence everywhere in Assam." },
+                { emoji: "💫", fact: "The Guwahati port murals near Rajaduwar Ferry feature multiple artistic styles, showing how different artists interpret his legacy." },
+                { emoji: "🎯", fact: "Each mural is marked with 'Marked' status, indicating they are recognized cultural landmarks in their respective cities." },
+                { emoji: "🗣️", fact: "Collaborations between artists have created a unique artistic movement - individual styles merged into collective tributes." },
+                { emoji: "🌈", fact: "The murals use vibrant colors symbolizing Zubeen's diverse musical genres - rock, folk, pop, and Assamese traditional music." }
+            ]
+        };
+    }
+
+    // Get facts about specific murals
+    getMuralSpecificFacts(muralName) {
+        const specificFacts = {
+            "Zubeen Da's Blessing": "🙏 This flyover mural symbolizes the blessings Zubeen Da has given through his music to millions of fans.",
+            "The Voice of the Brahmaputra": "🌊 Located in Dimow, Dhemaji - this mural celebrates Zubeen's connection to Assam's mighty river and landscape.",
+            "Che Guevara of Assam": "✊ A powerful political statement showing Zubeen as a revolutionary voice for social justice and people's movements.",
+            "OG মন যায়": "📽️ At AEC Campus - references the iconic film where Zubeen performed at this very location decades ago.",
+            "The Eternal Echo Mural": "🎤 Beneath Ganesguri Flyover - 'COMRADE NEVER DIE' is not just graffiti, it's a collective promise by his fans.",
+            "Mayabini Mural": "🎶 His most iconic song 'Mayabini' appears in multiple murals, showing its eternal significance in his legacy.",
+            "The Stairway to heaven": "🎹 A surreal artwork showing Zubeen ascending via piano keys - music as a path to eternity.",
+            "Baidew Hotel Mural": "❤️ Located in daily community spaces, this mural proves deep connections are formed through passion, not perfection.",
+            "The Underpass Serenade": "🏙️ Transforms an anonymous underpass into a public shrine celebrating the urban cultural landscape.",
+            "Be Rebel mural": "🔥 At B. Borooah College - fueling the next generation to be revolutionaries and visionaries like Zubeen Da."
+        };
+        return specificFacts[muralName] || null;
     }
 
     createChatbotUI() {
@@ -44,7 +85,7 @@ class MuralChatbot {
                             <div class="quick-actions">
                                 <button class="quick-action-btn btn-location" onclick="window.muralChatbot.quickAction('Find murals near me')">📍 Near Me</button>
                                 <button class="quick-action-btn btn-city" onclick="window.muralChatbot.quickAction('Show murals in Guwahati')">🏙️ Explore</button>
-                                <button class="quick-action-btn btn-info" onclick="window.muralChatbot.quickAction('Tell me about the murals')">📖 Stories</button>
+                                <button class="quick-action-btn btn-info" onclick="window.muralChatbot.shareFact()">💡 Fun Fact</button>
                             </div>
                         </div>
                     </div>
@@ -162,17 +203,41 @@ class MuralChatbot {
         // Detect intent
         if (lowerQuery.includes('near me') || lowerQuery.includes('closest') || lowerQuery.includes('nearby')) {
             this.handleNearbyQuery();
-        } else if (lowerQuery.includes('guwahati') || lowerQuery.includes('assam')) {
+        } else if (lowerQuery.includes('guwahati') || lowerQuery.includes('assam') || lowerQuery.includes('city') || lowerQuery.includes('explore')) {
             this.handleLocationQuery(query);
-        } else if (lowerQuery.includes('tell') || lowerQuery.includes('about') || lowerQuery.includes('info')) {
+        } else if (lowerQuery.includes('fact') || lowerQuery.includes('interesting') || lowerQuery.includes('cool')) {
+            this.shareFact();
+        } else if (lowerQuery.includes('tell') || lowerQuery.includes('about') || lowerQuery.includes('info') || lowerQuery.includes('story')) {
             this.handleInfoQuery(query);
-        } else if (lowerQuery.includes('list') || lowerQuery.includes('all') || lowerQuery.includes('show')) {
+        } else if (lowerQuery.includes('list') || lowerQuery.includes('all') || lowerQuery.includes('show') || lowerQuery.includes('statistics')) {
             this.handleListQuery();
         } else if (lowerQuery.includes('help') || lowerQuery.includes('how')) {
             this.handleHelpQuery();
         } else {
             this.handleGeneralQuery(query);
         }
+    }
+
+    shareFact() {
+        const factsData = this.getMuralFacts();
+        const allFacts = factsData.facts;
+        
+        // Get a random fact that hasn't been shared recently
+        let randomFact;
+        do {
+            randomFact = allFacts[Math.floor(Math.random() * allFacts.length)];
+        } while (this.factsShared.includes(randomFact.fact) && this.factsShared.length < allFacts.length);
+        
+        this.factsShared.push(randomFact.fact);
+        if (this.factsShared.length > 5) this.factsShared.shift();
+        
+        const response = `
+            <strong>${randomFact.emoji} Did you know?</strong>
+            <p>${randomFact.fact}</p>
+            <p style="font-size: 0.85rem; color: #999; margin-top: 8px; font-style: italic;">Click "💡 Fun Fact" again for another interesting tidbit!</p>
+        `;
+        
+        this.addMessage(response, 'bot');
     }
 
     handleNearbyQuery() {
@@ -310,13 +375,20 @@ class MuralChatbot {
             return;
         }
 
+        // Get specific facts about the mural
+        const specificFact = this.getMuralSpecificFacts(muralName.name);
+        
         let response = `
-            <strong>${muralName.name}</strong>
+            <strong>🎨 ${muralName.name}</strong>
             <p><strong>📍 Location:</strong> ${muralName.locationDesc}</p>
             <p><strong>📝 Description:</strong> ${muralName.description}</p>
             <p><strong>👤 Artist(s):</strong> ${muralName.artist}</p>
             <p><strong>📸 Images:</strong> ${muralName.images.length} available</p>
         `;
+        
+        if (specificFact) {
+            response += `<p><strong>💡 Fun Fact:</strong> ${specificFact}</p>`;
+        }
 
         this.addMessage(response, 'bot');
     }
@@ -339,12 +411,13 @@ class MuralChatbot {
 
     handleHelpQuery() {
         const response = `
-            <strong>❓ How to use the Mural Guide:</strong>
+            <strong>❓ How to use ZG Chronicle:</strong>
             <ul style="margin: 10px 0 10px 20px;">
                 <li><strong>"Find murals near me"</strong> - Shows nearby murals based on your location</li>
                 <li><strong>"Show murals in [city]"</strong> - Lists murals in a specific city</li>
-                <li><strong>"Tell me about [mural name]"</strong> - Details about a specific mural</li>
-                <li><strong>"List all murals"</strong> - Shows statistics</li>
+                <li><strong>"Tell me about [mural name]"</strong> - Details about a specific mural with fascinating facts</li>
+                <li><strong>"Fun fact"</strong> - Learn interesting facts about Zubeen Garg and the murals</li>
+                <li><strong>"List all murals"</strong> - Shows statistics about the collection</li>
             </ul>
         `;
 
@@ -352,10 +425,17 @@ class MuralChatbot {
     }
 
     handleGeneralQuery(query) {
-        this.addMessage(
-            `🤔 I'm here to help you find Zubeen Garg murals! Try asking me to find nearby murals, show murals in a city, or tell you about a specific mural.`,
-            'bot'
-        );
+        const response = `
+            <p>🤔 I'm here to explore Zubeen Garg's mural legacy with you!</p>
+            <p>Try asking me to:</p>
+            <ul style="margin: 10px 0 10px 20px;">
+                <li>Find nearby murals</li>
+                <li>Explore murals in a specific city</li>
+                <li>Learn about a specific mural</li>
+                <li>Share interesting facts about Zubeen and his murals</li>
+            </ul>
+        `;
+        this.addMessage(response, 'bot');
     }
 
     findMuralByName(query) {
