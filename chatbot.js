@@ -544,52 +544,56 @@ class MuralChatbot {
         const mural = muralData.find(m => m.name === muralName);
         if (!mural) return;
 
-        // Create modal overlay
+        // Convert coordinates if they're DMS format
+        const decLat = dmsToDecimal(lat);
+        const decLng = dmsToDecimal(lng);
+
+        // Create modal overlay with mobile-optimized layout
         const modalHTML = `
-            <div id="mural-modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; animation: fadeIn 0.3s ease;">
-                <div style="background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%); border-radius: 16px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(161, 35, 115, 0.6); border: 2px solid #fdbb2d; animation: slideUp 0.3s ease;">
+            <div id="mural-modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: flex-start; justify-content: center; z-index: 2000; animation: fadeIn 0.3s ease; padding: 10px; padding-top: 40px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+                <div style="background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%); border-radius: 16px; max-width: 600px; width: 100%; box-shadow: 0 20px 60px rgba(161, 35, 115, 0.6); border: 2px solid #fdbb2d; animation: slideUp 0.3s ease;">
                     
-                    <div style="background: linear-gradient(135deg, #a12373 0%, #816799 50%, #4ea0d2 100%); padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #fdbb2d; position: sticky; top: 0; z-index: 2001;">
-                        <h2 style="margin: 0; color: white; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🎨 ${mural.name}</h2>
-                        <button onclick="document.getElementById('mural-modal-overlay').remove()" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.5rem; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">✕</button>
+                    <div style="background: linear-gradient(135deg, #a12373 0%, #816799 50%, #4ea0d2 100%); padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #fdbb2d; position: sticky; top: 0; z-index: 2001; gap: 12px;">
+                        <h2 style="margin: 0; color: white; font-size: 1.3rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); flex: 1; word-break: break-word;">🎨 ${mural.name}</h2>
+                        <button onclick="window.muralChatbot.closeMuralModal()" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.5rem; min-width: 48px; min-height: 48px; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0; touch-action: manipulation;">✕</button>
                     </div>
                     
-                    <div style="padding: 24px; color: white;">
-                        <div style="background: rgba(253, 187, 45, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #fdbb2d; margin-bottom: 20px;">
-                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📍 Location:</strong></p>
-                            <p style="margin: 0; color: #e0e0e0;">${mural.locationDesc}</p>
+                    <div style="padding: 16px; color: white;">
+                        <div style="background: rgba(253, 187, 45, 0.15); padding: 14px; border-radius: 10px; border-left: 4px solid #fdbb2d; margin-bottom: 16px;">
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem;"><strong style="color: #fdbb2d;">📍 Location:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem; line-height: 1.4;">${mural.locationDesc}</p>
                         </div>
                         
-                        <div style="background: rgba(78, 160, 210, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #4ea0d2; margin-bottom: 20px;">
-                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #4ea0d2;">📝 Description:</strong></p>
-                            <p style="margin: 0; color: #e0e0e0; line-height: 1.6;">${mural.description}</p>
+                        <div style="background: rgba(78, 160, 210, 0.15); padding: 14px; border-radius: 10px; border-left: 4px solid #4ea0d2; margin-bottom: 16px;">
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem;"><strong style="color: #4ea0d2;">📝 Description:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0; line-height: 1.5; font-size: 0.95rem;">${mural.description}</p>
                         </div>
                         
-                        <div style="background: rgba(161, 35, 115, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #a12373; margin-bottom: 20px;">
-                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #a12373;">👤 Artist(s):</strong></p>
-                            <p style="margin: 0; color: #e0e0e0;">${mural.artist}</p>
+                        <div style="background: rgba(161, 35, 115, 0.15); padding: 14px; border-radius: 10px; border-left: 4px solid #a12373; margin-bottom: 16px;">
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem;"><strong style="color: #a12373;">👤 Artist(s):</strong></p>
+                            <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem;">${mural.artist}</p>
                         </div>
                         
-                        <div style="background: rgba(253, 187, 45, 0.1); padding: 16px; border-radius: 10px; margin-bottom: 20px;">
-                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📊 Status:</strong></p>
-                            <p style="margin: 0; color: #e0e0e0;"><strong>${mural.status}</strong> ✓</p>
+                        <div style="background: rgba(253, 187, 45, 0.1); padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem;"><strong style="color: #fdbb2d;">📊 Status:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0; font-size: 0.95rem;"><strong>${mural.status}</strong> ✓</p>
                         </div>
                         
                         ${mural.images && mural.images.length > 0 ? `
-                            <div style="margin-bottom: 20px;">
-                                <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📸 Images (${mural.images.length}):</strong></p>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
+                            <div style="margin-bottom: 16px;">
+                                <p style="margin: 0 0 10px 0; font-size: 0.95rem;"><strong style="color: #fdbb2d;">📸 Images (${mural.images.length}):</strong></p>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px;">
                                     ${mural.images.map(img => `
-                                        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s;" onclick="this.style.transform='scale(1.05)'">
-                                            <img src="Images/${img}" alt="${mural.name}" style="width: 100%; height: 120px; object-fit: cover; display: block;">
-                                            <p style="margin: 4px; font-size: 0.75rem; color: #999; text-align: center; word-break: break-word;">${img}</p>
+                                        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s; touch-action: manipulation;">
+                                            <img src="Images/${img}" alt="${mural.name}" style="width: 100%; height: 100px; object-fit: cover; display: block;" loading="lazy">
+                                            <p style="margin: 4px; font-size: 0.7rem; color: #999; text-align: center; word-break: break-word; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${img}</p>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
                         ` : ''}
                         
-                        <button onclick="if(window.map) { window.map.setView([${lat}, ${lng}], 14); document.getElementById('mural-modal-overlay').remove(); }" style="width: 100%; background: linear-gradient(135deg, #fdbb2d, #f4a460); color: #1a0a2e; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(253, 187, 45, 0.4);">
+                        <button onclick="window.muralChatbot.viewOnMap(${decLat}, ${decLng})" style="width: 100%; background: linear-gradient(135deg, #fdbb2d, #f4a460); color: #1a0a2e; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(253, 187, 45, 0.4); touch-action: manipulation; min-height: 44px;">
                             🗺️ View on Map
                         </button>
                     </div>
@@ -601,8 +605,38 @@ class MuralChatbot {
         const existingModal = document.getElementById('mural-modal-overlay');
         if (existingModal) existingModal.remove();
 
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+
         // Add modal to page
         document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Close modal on outside click
+        setTimeout(() => {
+            const overlay = document.getElementById('mural-modal-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        this.closeMuralModal();
+                    }
+                });
+            }
+        }, 100);
+    }
+
+    closeMuralModal() {
+        const modal = document.getElementById('mural-modal-overlay');
+        if (modal) {
+            modal.remove();
+            document.body.style.overflow = '';
+        }
+    }
+
+    viewOnMap(lat, lng) {
+        if (window.map) {
+            window.map.setView([lat, lng], 14);
+            this.closeMuralModal();
+        }
     }
 }
 
