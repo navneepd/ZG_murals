@@ -1,10 +1,21 @@
 // Mural-list.js - Contains mural data and helper functions
 
-// Convert DMS to Decimal Degrees
+// Convert DMS to Decimal Degrees or pass through if already decimal
 function dmsToDecimal(dms) {
+    // If it's already a number (decimal format), return it directly
+    if (typeof dms === 'number') {
+        return dms;
+    }
+    
     if (!dms || dms.trim() === '') return null;
     
-    // Remove any extra spaces and split the string
+    // Check if it's already a decimal number (string format like "26.75174597")
+    const decimalValue = parseFloat(dms);
+    if (!isNaN(decimalValue) && dms.toString().indexOf('°') === -1) {
+        return decimalValue;
+    }
+    
+    // Remove any extra spaces and split the string (DMS format)
     const cleanDms = dms.replace(/\s+/g, '');
     const parts = cleanDms.split(/[°'"]/).filter(part => part.trim() !== '');
     
