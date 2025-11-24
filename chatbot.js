@@ -352,17 +352,17 @@ class MuralChatbot {
             return;
         }
 
-        let response = `<strong>🎨 Murals in ${matchedCity.toUpperCase()}:</strong><ul style="margin: 10px 0 10px 20px;">`;
+        let response = `<strong>🎨 Murals in ${matchedCity.toUpperCase()}:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">`;
         filteredMurals.forEach((mural, index) => {
             response += `
-                <li>
-                    <strong>${index + 1}. ${mural.name}</strong>
-                    <br/>📍 ${mural.locationDesc}
-                    <br/>👤 Artist: ${mural.artist}
-                </li>
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${mural.lat}, ${mural.lng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                    <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
+                    <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
+                    <div style="font-size: 0.85rem; color: #aaa;">👤 Artist: ${mural.artist}</div>
+                </div>
             `;
         });
-        response += '</ul>';
+        response += '</div><p style="font-size: 0.85rem; color: #999; margin-top: 10px;">💡 Click on any mural card above to view details!</p>';
 
         this.addMessage(response, 'bot');
     }
