@@ -292,7 +292,17 @@ class MuralChatbot {
             .slice(0, 5);
 
         if (muralsWithDistance.length === 0) {
-            this.addMessage('😔 No murals found in your area.', 'bot');
+            const noMuralsMsg = `
+                <strong>😔 No murals found near you</strong>
+                <p>We haven't documented any murals in your current area yet, but that doesn't mean there aren't any!</p>
+                <p><strong>📸 Help us grow the collection:</strong></p>
+                <p>If you've spotted a Zubeen Garg mural or any public art tribute, we'd love to hear from you! Send us details about the location, and we'll add it to our map.</p>
+                <p style="background: rgba(253, 187, 45, 0.2); padding: 12px; border-radius: 8px; border-left: 4px solid #fdbb2d;">
+                    <strong>📧 Email:</strong> <a href="mailto:das.navneep09@gmail.com?subject=New Mural Submission - Zubeen Garg&body=Location: %0ADescription: %0AArtist (if known): %0AImages attached: " style="color: #fdbb2d;">das.navneep09@gmail.com</a>
+                </p>
+                <p style="font-size: 0.9rem; color: #aaa;">Include the location, description, and any photos you have!</p>
+            `;
+            this.addMessage(noMuralsMsg, 'bot');
             return;
         }
 
@@ -398,7 +408,17 @@ class MuralChatbot {
         });
 
         if (filteredMurals.length === 0) {
-            this.addMessage(`😔 No murals found in ${matchedCity}.`, 'bot');
+            const noMuralsMsg = `
+                <strong>😔 No murals found in ${matchedCity}</strong>
+                <p>We haven't documented any murals in ${matchedCity} yet, but there might be some we haven't found!</p>
+                <p><strong>📸 Help us grow the collection:</strong></p>
+                <p>If you know of a Zubeen Garg mural or public art tribute in or around ${matchedCity}, please share it with us!</p>
+                <p style="background: rgba(253, 187, 45, 0.2); padding: 12px; border-radius: 8px; border-left: 4px solid #fdbb2d;">
+                    <strong>📧 Email:</strong> <a href="mailto:das.navneep09@gmail.com?subject=New Mural in ${matchedCity} - Zubeen Garg&body=City: ${matchedCity}%0ALocation: %0ADescription: %0AArtist (if known): %0AImages attached: " style="color: #fdbb2d;">das.navneep09@gmail.com</a>
+                </p>
+                <p style="font-size: 0.9rem; color: #aaa;">Include the exact location, description, artist name (if known), and any photos!</p>
+            `;
+            this.addMessage(noMuralsMsg, 'bot');
             return;
         }
 
