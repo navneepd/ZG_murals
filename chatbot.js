@@ -386,8 +386,13 @@ class MuralChatbot {
         
         response += '<strong>🎨 5 Nearest Murals to You:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">';
         muralsWithDistance.forEach((mural, index) => {
+            // Use the decimal lat/lng already in the mural object (converted earlier)
+            const decLat = typeof mural.lat === 'number' ? mural.lat : dmsToDecimal(mural.lat);
+            const decLng = typeof mural.lng === 'number' ? mural.lng : dmsToDecimal(mural.lng);
+            // Escape single quotes in mural name for onclick handler
+            const escapedName = mural.name.replace(/'/g, "\\'");
             response += `
-                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${mural.lat}, ${mural.lng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${escapedName}', ${decLat}, ${decLng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
                     <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
                     <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
                     <div style="font-size: 0.85rem; color: #aaa;">🛣️ ${mural.distance.toFixed(1)} km away</div>
@@ -551,8 +556,10 @@ class MuralChatbot {
         filteredMurals.forEach((mural, index) => {
             const decLat = dmsToDecimal(mural.lat);
             const decLng = dmsToDecimal(mural.lng);
+            // Escape single quotes in mural name for onclick handler
+            const escapedName = mural.name.replace(/'/g, "\\'");
             response += `
-                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${decLat}, ${decLng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${escapedName}', ${decLat}, ${decLng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
                     <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
                     <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
                     <div style="font-size: 0.85rem; color: #aaa;">👤 Artist: ${mural.artist}</div>
@@ -682,11 +689,21 @@ class MuralChatbot {
     showMuralDetail(muralName, lat, lng) {
         // Find the mural in muralData
         const mural = muralData.find(m => m.name === muralName);
-        if (!mural) return;
+        if (!mural) {
+            console.error('Mural not found:', muralName);
+            this.addMessage('❌ Could not find mural details. Please try again.', 'bot');
+            return;
+        }
 
         // Convert coordinates if they're DMS format
-        const decLat = dmsToDecimal(lat);
-        const decLng = dmsToDecimal(lng);
+        const decLat = typeof lat === 'number' ? lat : dmsToDecimal(lat);
+        const decLng = typeof lng === 'number' ? lng : dmsToDecimal(lng);
+        
+        if (!decLat || !decLng) {
+            console.error('Invalid coordinates:', { lat, lng });
+            this.addMessage('❌ Invalid location coordinates. Please try again.', 'bot');
+            return;
+        }
 
         // Create modal overlay with mobile-optimized layout
         const modalHTML = `
