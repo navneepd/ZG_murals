@@ -257,7 +257,11 @@ class MuralChatbot {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                this.showNearbyMurals();
+                
+                // Identify city from coordinates
+                const city = this.identifyCityFromCoordinates(this.userLocation.lat, this.userLocation.lng);
+                
+                this.showNearbyMurals(city);
             },
             (error) => {
                 this.addMessage(
@@ -268,7 +272,34 @@ class MuralChatbot {
         );
     }
 
-    showNearbyMurals() {
+    identifyCityFromCoordinates(lat, lng) {
+        // City coordinates (approximate centers and bounds)
+        const cities = {
+            guwahati: { lat: 26.15, lng: 91.75, radius: 0.8 },
+            jorhat: { lat: 26.75, lng: 94.20, radius: 0.6 },
+            lakhimpur: { lat: 27.25, lng: 94.30, radius: 0.8 },
+            dibrugarh: { lat: 27.50, lng: 94.95, radius: 0.7 },
+            sivasagar: { lat: 26.98, lng: 94.65, radius: 0.6 },
+            tezpur: { lat: 26.62, lng: 92.83, radius: 0.6 },
+            morigaon: { lat: 26.35, lng: 92.25, radius: 0.6 },
+            dhemaji: { lat: 27.50, lng: 93.90, radius: 0.6 }
+        };
+
+        let closestCity = 'guwahati';
+        let minDistance = Infinity;
+
+        for (const [city, coords] of Object.entries(cities)) {
+            const distance = this.calculateDistance(lat, lng, coords.lat, coords.lng);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestCity = city;
+            }
+        }
+
+        return closestCity;
+    }
+
+    showNearbyMurals(identifiedCity = null) {
         if (!this.userLocation || !muralData) return;
 
         // Calculate distances
@@ -306,7 +337,14 @@ class MuralChatbot {
             return;
         }
 
-        let response = '<strong>🎨 5 Nearest Murals to You:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">';
+        let response = '';
+        
+        // Add location identification if available
+        if (identifiedCity) {
+            response += `<p style="color: #fdbb2d; font-style: italic; margin-bottom: 8px;">📍 You are in <strong>${identifiedCity.toUpperCase()}</strong></p>`;
+        }
+        
+        response += '<strong>🎨 5 Nearest Murals to You:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">';
         muralsWithDistance.forEach((mural, index) => {
             response += `
                 <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${mural.lat}, ${mural.lng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
