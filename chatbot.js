@@ -18,19 +18,29 @@ class MuralChatbot {
         const chatbotHTML = `
             <div id="chatbot-container" class="chatbot-container">
                 <div class="chatbot-header">
-                    <h3>🎨 Mural Guide</h3>
-                    <button id="chatbot-toggle" class="chatbot-toggle" title="Minimize">−</button>
+                    <div class="chatbot-header-content">
+                        <div class="chatbot-icon">🎨</div>
+                        <div>
+                            <h3>Mural Guide</h3>
+                            <p class="chatbot-status">Always here to help</p>
+                        </div>
+                    </div>
+                    <button id="chatbot-toggle" class="chatbot-toggle" title="Minimize">
+                        <span class="toggle-icon">−</span>
+                    </button>
                 </div>
                 <div id="chat-messages" class="chat-messages">
                     <div class="chat-message bot-message">
-                        <p>👋 Hi! I'm your Mural Guide. I can help you find nearby Zubeen Garg murals!</p>
-                        <p>Ask me things like:</p>
-                        <ul style="margin-left: 15px; margin-top: 8px;">
-                            <li>"Find murals near me"</li>
-                            <li>"Show murals in Guwahati"</li>
-                            <li>"What murals are closest?"</li>
-                            <li>"Tell me about a mural"</li>
-                        </ul>
+                        <div class="message-avatar">🎨</div>
+                        <div class="message-content">
+                            <p><strong>Hi! I'm your Mural Guide</strong></p>
+                            <p>I can help you find nearby Zubeen Garg murals across Assam!</p>
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Find murals near me')">📍 Near Me</button>
+                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Show murals in Guwahati')">🏙️ Cities</button>
+                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Tell me about the murals')">ℹ️ Info</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="chat-input-container">
@@ -41,7 +51,9 @@ class MuralChatbot {
                         placeholder="Ask me something..." 
                         autocomplete="off"
                     />
-                    <button id="chat-send" class="chat-send-btn">Send</button>
+                    <button id="chat-send" class="chat-send-btn" title="Send">
+                        <span>➤</span>
+                    </button>
                 </div>
             </div>
         `;
@@ -53,6 +65,9 @@ class MuralChatbot {
         } else {
             document.body.insertAdjacentHTML('beforeend', chatbotHTML);
         }
+        
+        // Make chatbot accessible globally
+        window.muralChatbot = this;
     }
 
     attachEventListeners() {
@@ -66,6 +81,12 @@ class MuralChatbot {
         });
 
         chatToggle.addEventListener('click', () => this.toggleChatbot());
+    }
+
+    quickAction(text) {
+        const input = document.getElementById('chat-input');
+        input.value = text;
+        this.sendMessage();
     }
 
     toggleChatbot() {
@@ -105,9 +126,19 @@ class MuralChatbot {
         messageDiv.className = `chat-message ${sender}-message`;
 
         if (sender === 'user') {
-            messageDiv.innerHTML = `<p>${this.escapeHtml(text)}</p>`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${this.escapeHtml(text)}</p>
+                </div>
+                <div class="message-avatar">👤</div>
+            `;
         } else {
-            messageDiv.innerHTML = text; // Bot can send HTML
+            messageDiv.innerHTML = `
+                <div class="message-avatar">🎨</div>
+                <div class="message-content">
+                    ${text}
+                </div>
+            `;
         }
 
         messagesContainer.appendChild(messageDiv);
