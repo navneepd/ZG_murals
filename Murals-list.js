@@ -82,7 +82,7 @@ const muralData = [
         lng: "91°39'31.44\"E",
         locationDesc: "Assam Engineering College: Hostel-1",
         description: "A vibrant mural at Assam Engineering College pays tribute to Zubeen Garg and the classic film মন যায় shot on its campus.",
-        artist: "(Reach out to me for credit)",
+        artist: "Reachout for credit",
         status: "Marked",
         images: ["AEC guwahti.jpg"]
     },
@@ -132,7 +132,7 @@ const muralData = [
         lng: "90°39'9.37\"E",
         locationDesc: "Inside Ghorua Juti Hote",
         description: "A bold and dynamic mural of Colonel Zubeen Da, capturing his larger-than-life persona and commanding presence.",
-        artist: "(reach out to me for credit)",
+        artist: "Reachout for credit",
         status: "Marked",
         images: ["Ghorua_Juti_Hotel_Mural.png"]
     },
@@ -152,7 +152,7 @@ const muralData = [
         lng: "94° 5'44.37\"E",
         locationDesc: "Lakhimpur Girl's College",
         description: "A vibrant mural of Zubeen Da set against the backdrop of Assam’s map, symbolizing his deep roots and everlasting connection to his homeland",
-        artist: "(reach out to me for credit)",
+        artist: "Reachout for credit",
         status: "Marked",
         images: ["Lakhimpur_Girls_ College.png"]
     },
@@ -162,7 +162,7 @@ const muralData = [
         lng: "94°44'23.90\"E",
         locationDesc: "Demow bypass NH-37",
         description: "On a staircase of keys, Zubeen Da walks to the skies, his music lifting souls where eternity lies",
-        artist: "(reach out to me for credit)",
+        artist: "Reachout for credit",
         status: "Marked",
         images: ["Demow_mural.jpg"]
     },
@@ -302,7 +302,7 @@ const muralData = [
         lng: "91°44'57.70\"E",
         locationDesc: "Cotton University: RKB Hostel",
         description: "An intense portrait of a younger Zubeen Da, featuring his trademark wild hair and a piercing, unforgettable gaze. The expressive, rough brushwork captures the raw passion and energetic spirit of the legendary Zubeen Da.",
-        artist: "(Reachout for credit)",
+        artist: "Reachout for credit",
         status: "Marked",
         images: ["RKB_hostel.jpg"]
     },
@@ -325,6 +325,166 @@ const muralData = [
         artist: "Ankush Nath",
         status: "Marked",
         images: ["Dikhow-railBridge-pillars.jpg"]
+    },
+    {
+        name: "Baidew Hotel Mural",
+        lat: 26.75174597,
+        lng: 93.13431237,
+        locationDesc: "Baidew Hotel Bishwanath bypass",
+        description: "Located in a place of daily community interaction, this piece transforms a simple wall into a cherished spot. It doesn't rely on academic perfection; it relies on collective love. This mural serves as a constant, affectionate reminder of Zubeen Da's place in our hearts, proving that the deepest connections are often formed by passion, not polish. It is special simply because it is for him.",
+        artist: "Tridip",
+        status: "Marked",
+        images: ["Baidew_hotel_mural.jpg"]
+    },
+    {
+        name: "The Underpass Serenade",
+        lat: 26.11938769,
+        lng: 91.82211187,
+        locationDesc: "Khanapara Underpass",
+        description: "In a city defined by its constant motion, this mural acts as a vibrant, inescapable pause. It turns the anonymous underpass into a spontaneous and public shrine. It is a daily tribute by the community to a musician whose voice has been the soundtrack to generations, symbolizing the enduring power of art and culture to thrive even in the most functional, industrial corners of the city.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Khanapara_mural.jpg", "Khanapara_mural1.jpg"]
+    },
+    {
+        name: "Be Rebel mural",
+        lat: 26.17941834,
+        lng: 91.75908985,
+        locationDesc: "B. Borooah Hostel Wall",
+        description: "Fueling the next generation of revolutionaries. Zubeen Da takes center stage at B. Borooah College.",
+        artist: "Marcel Baruah",
+        status: "Marked",
+        images: ["B.Borooah_mural1.jpg", "B.Borooah_mural.jpg"]
+    },
+    {
+        name: "The Eternal Echo Mural",
+        lat: 26.15038485,
+        lng: 91.78503225,
+        locationDesc: "Beneath the Ganesguri Flyover",
+        description: "Beneath the roar of the Ganesguri Flyover, this iconic mural stands as a silent vow. Zubeen Da our 'Comrade,' is captured with an eternal gaze behind his sunglasses, his image bathed in the light of a perpetual sunburst a symbol of the hope he ignited. The powerful declaration, \"COMRADE NEVER DIE,\" isn't just graffiti; it is the collective, heart-felt promise of his fans that the spirit of the rebel, the poet, and the legend lives on, always watching over the city he loved.",
+        artist: "LYKO",
+        status: "Marked",
+        images: ["Comrade_zubeen_da.jpg"]
+    },
+    {
+        name: "The Enchanting Voice Mural",
+        lat: 26.18519368,
+        lng: 91.73933323,
+        locationDesc: "Opposite Guwahati Rajaduwar Ferry Service",
+        description: "Situated on a busy roadside wall, the Mayabini mural transforms the concrete barrier into an open-air canvas of adoration. Framed by a simple metal fence like a stage, this arresting tribute breaks through the urban chaos, offering a moment of profound cultural pride and reminding every passerby of Zubeen Da's enduring, mystical charm.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Guwahati_port1.jpg", "Guwahati_port2.jpg"]
+    },
+    {
+        name: "Goldie da Mural",
+        lat: 26.1849927,
+        lng: 91.73916023,
+        locationDesc: "Opposite Guwahati Rajaduwar Ferry Service",
+        description: "A dual-image mural featuring two representations of Zubeen Da. The left side is a silhouette in warm tones, arm raised high in rockstar triumph, labeled \"Goldie da\" (his nickname). The right side is a more realistic, emotional portrayal of him singing, with colors split between dark and vibrant hues. This mural captures both the energetic performer and the pensive vibe of Zubeen Da",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Guwahati_port3.jpg", "Guwahati_port4.jpg"]
+    },
+    {
+        name: "Hat and High Notes",
+        lat: 26.18481218,
+        lng: 91.7389765,
+        locationDesc: "Opposite Guwahati Rajaduwar Ferry Service",
+        description: "A striking portrait capturing the intensity of Zubeen Da's live performance. He is depicted in a wide-brimmed hat, leaning into the mic amidst rich, warm colors. The prominent Assamese lyric, \"গান গোৱা\" (Gaan gua), serves as a direct call to the viewer to \"Remember his Songs\" and the emotions it carries.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Guwahati_port5.jpg"]
+    },
+    {
+        name: "Zubeen Da Wave Rider",
+        lat: 26.18488127,
+        lng: 91.73908603,
+        locationDesc: "Opposite Guwahati Rajaduwar Ferry Service",
+        description: "A dramatic, side-profile portrait of Zubeen Da, wearing sunglasses and featuring his signature long, flowing hair painted against a vivid blue background. The figure is surrounded by stylized white waves or swirling energy, emphasizing his rockstar persona and connection to the waves.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Guwahati_port6.jpg", "Guwahati_port7.jpg"]
+    },
+    {
+        name: "Voice on the Wall Mural",
+        lat: 26.08857409,
+        lng: 89.9633975,
+        locationDesc: "boundary wall of the Gauripur Public Library",
+        description: "See the 'Voice on the Wall.' A massive, unforgettable 12x15 ft mural celebrating Zubeen Da's life and legacy, painted with passion by Gauripur's finest local artists. A must-see cultural landmark.",
+        artist: "Bishnu Prasad Ray, Kalyani Adhikary, Nabajyoti Barman, Hemanta Ray, Tanmay Roy, Nayan Roy",
+        status: "Marked",
+        images: ["Gauripur_mural.jpg"]
+    },
+    {
+        name: "Che Guevara of Assam: The Rebel Mic",
+        lat: 26.20022558,
+        lng: 91.77845806,
+        locationDesc: "Outside wall of Lighthouse Towers",
+        description: "A powerful, high-contrast mural celebrating Zubeen Da's dual identity as a musical icon and a social revolutionary (\"Comrade Zubeen\"). Depicted in military-style attire, the artist holds a microphone labeled 'ZUBEEN' as a symbol of resistance, the artwork is a potent tribute to his unwavering spirit of defiance.",
+        artist: "Pankaj pao, Dhritismita talukdar, Sumit Sarkar, Irean Ansari, Kalpa Jyoti Das, hrishikesh Das, Thinshu Gogoi",
+        status: "Marked",
+        images: ["Lighthouse_mural1.jpg", "Lighthouse_mural.jpg"]
+    },
+    {
+        name: "The Romantic Rebel",
+        lat: 26.20035629,
+        lng: 91.77909321,
+        locationDesc: "Opposite bhakti kuthir",
+        description: "A romantic and expressive portrait of Zubeen Da, focusing on his identity as a young musical poet. Featuring his signature long hair, the mural is surrounded by floating musical notes and song lyrics, and is titled 'Mayabini' (Enchanting), celebrating the emotional depth of his melodies and lyrics.",
+        artist: "tridip_arts, ms.pigments, ujaswata, zumon___, _akshayyyy.yy, rahul_thakuria",
+        status: "Marked",
+        images: ["Bhakti_kutir_mural.jpg"]
+    },
+    {
+        name: "The Sound and the Sanctuary Mural",
+        lat: 26.13760131,
+        lng: 91.80871023,
+        locationDesc: "Triveni path: Six mile",
+        description: "Here is a vibrant, multi-panel street art tribute to Zubeen Da, celebrating his multifaceted persona and enduring legacy. It combines realistic portraiture with energetic graffiti and symbolic elements over a continuous stretch of wall.",
+        artist: "Neelim Mahanta",
+        status: "Marked",
+        images: ["Triveni_path_mural1.jpg", "Triveni_path_mural.jpg"]
+    },
+    {
+        name: "The Smiling Poet mural",
+        lat: 26.12086536,
+        lng: 91.54067728,
+        locationDesc: "Palasbari market",
+        description: "A beautifully cheerful mural of Zubeen Da featuring his wide, engaging smile against a vibrant, abstract backdrop. The artwork is dominated by a profound lyrical quote expressing his desire to embrace the sky within his heart and find peace in the depth of the ocean. This piece celebrates Zubeen Da's emotional complexity, portraying him as a poet caught between the boundless vastness of the heavens and the silent mystery of the deep.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["Palasbari_mural.jpg", "Palasbari_mural1.jpg"]
+    },
+    {
+        name: "The Eternal Bard",
+        lat: 26.14005966,
+        lng: 91.79744286,
+        locationDesc: "Dispur flyover 1, opp. Vishal Mega Mart",
+        description: "A striking portrait on a flyover wall, depicting Zubeen Da with a pensive expression, holding a guitar and draped in a traditional gamusa. This artwork, marked '1972–∞', beautifully symbolizes his eternal legacy and his unique fusion of rock music with Assamese cultural heritage.",
+        artist: "Testsketcher",
+        status: "Marked",
+        images: ["Testsketcher_mural.jpg"]
+    },
+    {
+        name: "The Fedora and The Roses Mural",
+        lat: 26.12964083,
+        lng: 91.80639329,
+        locationDesc: "D' BACKYARD TREE CAFÉ",
+        description: "A grand, intimate mural adorning the wall of a cafe. The artwork features a stunning dual portrait: the powerful, fedora wearing rockstar singing into the mic, juxtaposed with a softer, youthful portrait. Framed by rich red roses and a dark, moody atmosphere, this mural captures the two sides of Zubeen Da's artistry - the passionate performer and the soulful poet creating a perfect ambiance for a lyrical lounge.",
+        artist: "Reach out for credit",
+        status: "Marked",
+        images: ["D'backyard_cafe.jpg"]
+    },
+    {
+        name: "Joi Zubeen Da Mural",
+        lat: 26.15263745,
+        lng: 91.78443283,
+        locationDesc: "SINHA LODGE",
+        description: "A bright, celebratory mural featuring Zubeen Da with an infectious smile and a traditional blue Assamese paga. Painted in vivid yellow and green, the artwork is crowned with the phrase \"জয় জুবিন দা\" (Joi Zubeen Da), serving as a powerful, Cultural Shrine of affection and respect for the beloved artist.",
+        artist: "Gautam Das",
+        status: "Marked",
+        images: ["Sinha_lodge.jpg"]
     },
 ];
 
