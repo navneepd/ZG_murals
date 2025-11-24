@@ -296,17 +296,17 @@ class MuralChatbot {
             return;
         }
 
-        let response = '<strong>🎨 5 Nearest Murals to You:</strong><ul style="margin: 10px 0 10px 20px;">';
+        let response = '<strong>🎨 5 Nearest Murals to You:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">';
         muralsWithDistance.forEach((mural, index) => {
             response += `
-                <li>
-                    <strong>${index + 1}. ${mural.name}</strong>
-                    <br/>📍 ${mural.locationDesc}
-                    <br/>🛣️ ${mural.distance.toFixed(1)} km away
-                </li>
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${mural.lat}, ${mural.lng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                    <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
+                    <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
+                    <div style="font-size: 0.85rem; color: #aaa;">🛣️ ${mural.distance.toFixed(1)} km away</div>
+                </div>
             `;
         });
-        response += '</ul><p><em>Click on the mural name in the list on the left to see more details!</em></p>';
+        response += '</div><p style="font-size: 0.85rem; color: #999; margin-top: 10px;">💡 Click on any mural card above to view details!</p>';
 
         this.addMessage(response, 'bot');
 
@@ -467,6 +467,72 @@ class MuralChatbot {
             "'": '&#039;'
         };
         return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    showMuralDetail(muralName, lat, lng) {
+        // Find the mural in muralData
+        const mural = muralData.find(m => m.name === muralName);
+        if (!mural) return;
+
+        // Create modal overlay
+        const modalHTML = `
+            <div id="mural-modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; animation: fadeIn 0.3s ease;">
+                <div style="background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%); border-radius: 16px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(161, 35, 115, 0.6); border: 2px solid #fdbb2d; animation: slideUp 0.3s ease;">
+                    
+                    <div style="background: linear-gradient(135deg, #a12373 0%, #816799 50%, #4ea0d2 100%); padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #fdbb2d; position: sticky; top: 0; z-index: 2001;">
+                        <h2 style="margin: 0; color: white; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🎨 ${mural.name}</h2>
+                        <button onclick="document.getElementById('mural-modal-overlay').remove()" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; font-size: 1.5rem; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">✕</button>
+                    </div>
+                    
+                    <div style="padding: 24px; color: white;">
+                        <div style="background: rgba(253, 187, 45, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #fdbb2d; margin-bottom: 20px;">
+                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📍 Location:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0;">${mural.locationDesc}</p>
+                        </div>
+                        
+                        <div style="background: rgba(78, 160, 210, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #4ea0d2; margin-bottom: 20px;">
+                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #4ea0d2;">📝 Description:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0; line-height: 1.6;">${mural.description}</p>
+                        </div>
+                        
+                        <div style="background: rgba(161, 35, 115, 0.15); padding: 16px; border-radius: 10px; border-left: 4px solid #a12373; margin-bottom: 20px;">
+                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #a12373;">👤 Artist(s):</strong></p>
+                            <p style="margin: 0; color: #e0e0e0;">${mural.artist}</p>
+                        </div>
+                        
+                        <div style="background: rgba(253, 187, 45, 0.1); padding: 16px; border-radius: 10px; margin-bottom: 20px;">
+                            <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📊 Status:</strong></p>
+                            <p style="margin: 0; color: #e0e0e0;"><strong>${mural.status}</strong> ✓</p>
+                        </div>
+                        
+                        ${mural.images && mural.images.length > 0 ? `
+                            <div style="margin-bottom: 20px;">
+                                <p style="margin: 0 0 12px 0; font-size: 1rem;"><strong style="color: #fdbb2d;">📸 Images (${mural.images.length}):</strong></p>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
+                                    ${mural.images.map(img => `
+                                        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s;" onclick="this.style.transform='scale(1.05)'">
+                                            <img src="Images/${img}" alt="${mural.name}" style="width: 100%; height: 120px; object-fit: cover; display: block;">
+                                            <p style="margin: 4px; font-size: 0.75rem; color: #999; text-align: center; word-break: break-word;">${img}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <button onclick="if(window.map) { window.map.setView([${lat}, ${lng}], 14); document.getElementById('mural-modal-overlay').remove(); }" style="width: 100%; background: linear-gradient(135deg, #fdbb2d, #f4a460); color: #1a0a2e; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(253, 187, 45, 0.4);">
+                            🗺️ View on Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('mural-modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        // Add modal to page
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 }
 
