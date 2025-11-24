@@ -231,13 +231,53 @@ class MuralChatbot {
         this.factsShared.push(randomFact.fact);
         if (this.factsShared.length > 5) this.factsShared.shift();
         
+        // Extract search keywords from the fact
+        const searchQuery = this.extractSearchTerms(randomFact.fact);
+        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+        
         const response = `
             <strong>${randomFact.emoji} Did you know?</strong>
             <p>${randomFact.fact}</p>
-            <p style="font-size: 0.85rem; color: #999; margin-top: 8px; font-style: italic;">Click "💡 Fun Fact" again for another interesting tidbit!</p>
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                <button onclick="window.open('${googleSearchUrl}', '_blank')" style="background: #4285F4; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                    🔍 Verify on Google
+                </button>
+                <button onclick="window.muralChatbot.shareFact()" style="background: #a12373; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                    ♻️ Another Fact
+                </button>
+            </div>
+            <p style="font-size: 0.75rem; color: #999; margin-top: 8px;">💡 Click "Verify on Google" to cross-check this fact or learn more!</p>
         `;
         
         this.addMessage(response, 'bot');
+    }
+
+    extractSearchTerms(fact) {
+        // Extract relevant search terms from the fact for better Google searches
+        const searchTerms = [
+            'Zubeen Garg',
+            'Assam',
+            'murals'
+        ];
+        
+        // Add specific terms from the fact
+        if (fact.toLowerCase().includes('recorded') || fact.toLowerCase().includes('songs')) {
+            searchTerms.push('songs');
+        }
+        if (fact.toLowerCase().includes('film') || fact.toLowerCase().includes('movie')) {
+            searchTerms.push('film');
+        }
+        if (fact.toLowerCase().includes('activist') || fact.toLowerCase().includes('social')) {
+            searchTerms.push('activism');
+        }
+        if (fact.toLowerCase().includes('musician')) {
+            searchTerms.push('musician');
+        }
+        if (fact.toLowerCase().includes('legacy')) {
+            searchTerms.push('legacy');
+        }
+        
+        return searchTerms.join(' ');
     }
 
     handleNearbyQuery() {
@@ -535,6 +575,8 @@ class MuralChatbot {
         // Get specific facts about the mural
         const specificFact = this.getMuralSpecificFacts(muralName.name);
         
+        const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(muralName.name + ' Zubeen Garg mural')}`;
+        
         let response = `
             <strong>🎨 ${muralName.name}</strong>
             <p><strong>📍 Location:</strong> ${muralName.locationDesc}</p>
@@ -546,6 +588,14 @@ class MuralChatbot {
         if (specificFact) {
             response += `<p><strong>💡 Fun Fact:</strong> ${specificFact}</p>`;
         }
+        
+        response += `
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                <button onclick="window.open('${googleSearchUrl}', '_blank')" style="background: #4285F4; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                    🔍 Search on Google
+                </button>
+            </div>
+        `;
 
         this.addMessage(response, 'bot');
     }
@@ -576,6 +626,9 @@ class MuralChatbot {
                 <li><strong>"Fun fact"</strong> - Learn interesting facts about Zubeen Garg and the murals</li>
                 <li><strong>"List all murals"</strong> - Shows statistics about the collection</li>
             </ul>
+            <p style="background: rgba(253, 187, 45, 0.15); padding: 10px; border-radius: 8px; border-left: 3px solid #fdbb2d; margin-top: 10px;">
+                <strong>✅ Fact Verification:</strong> All facts come with a "Verify on Google" button so you can cross-check information directly!
+            </p>
         `;
 
         this.addMessage(response, 'bot');
