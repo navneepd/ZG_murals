@@ -19,41 +19,52 @@ class MuralChatbot {
             <div id="chatbot-container" class="chatbot-container">
                 <div class="chatbot-header">
                     <div class="chatbot-header-content">
-                        <div class="chatbot-icon">🎨</div>
-                        <div>
-                            <h3>Mural Guide</h3>
-                            <p class="chatbot-status">Always here to help</p>
+                        <div class="chatbot-icon-wrapper">
+                            <div class="chatbot-icon">🎸</div>
+                            <div class="chatbot-pulse"></div>
+                        </div>
+                        <div class="chatbot-header-text">
+                            <h3>ZG Chronicle</h3>
+                            <p class="chatbot-status">Zubeen Garg's Mural Guide</p>
                         </div>
                     </div>
                     <button id="chatbot-toggle" class="chatbot-toggle" title="Minimize">
                         <span class="toggle-icon">−</span>
                     </button>
                 </div>
+                
+                <div class="chatbot-divider"></div>
+                
                 <div id="chat-messages" class="chat-messages">
-                    <div class="chat-message bot-message">
-                        <div class="message-avatar">🎨</div>
+                    <div class="chat-message bot-message welcome-message">
+                        <div class="message-avatar">🎸</div>
                         <div class="message-content">
-                            <p><strong>Hi! I'm your Mural Guide</strong></p>
-                            <p>I can help you find nearby Zubeen Garg murals across Assam!</p>
+                            <p><strong>Welcome to ZG Chronicle</strong></p>
+                            <p>Explore the legendary murals of Zubeen Garg across Assam. Discover stories, locations, and the artistry behind each tribute.</p>
                             <div class="quick-actions">
-                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Find murals near me')">📍 Near Me</button>
-                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Show murals in Guwahati')">🏙️ Cities</button>
-                                <button class="quick-action-btn" onclick="window.muralChatbot.quickAction('Tell me about the murals')">ℹ️ Info</button>
+                                <button class="quick-action-btn btn-location" onclick="window.muralChatbot.quickAction('Find murals near me')">📍 Near Me</button>
+                                <button class="quick-action-btn btn-city" onclick="window.muralChatbot.quickAction('Show murals in Guwahati')">🏙️ Explore</button>
+                                <button class="quick-action-btn btn-info" onclick="window.muralChatbot.quickAction('Tell me about the murals')">📖 Stories</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="chat-input-container">
                     <input 
                         type="text" 
                         id="chat-input" 
                         class="chat-input" 
-                        placeholder="Ask me something..." 
+                        placeholder="Ask about murals, locations, or artists..." 
                         autocomplete="off"
                     />
                     <button id="chat-send" class="chat-send-btn" title="Send">
-                        <span>➤</span>
+                        <span>🎵</span>
                     </button>
+                </div>
+                
+                <div class="chatbot-footer">
+                    <p>Celebrating the legacy of Zubeen Garg</p>
                 </div>
             </div>
         `;
