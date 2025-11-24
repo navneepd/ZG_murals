@@ -327,22 +327,12 @@ class MuralChatbot {
     }
 
     handleLocationQuery(query) {
-        // Map of locations to their city names
+        // Comprehensive map of all locations to their city/district
         const locationCityMap = {
-            'gandi park': 'jorhat',
-            'outside wall of the stadium': 'jorhat',
+            // Guwahati/Dispur
             'dispur': 'guwahati',
             'flyover': 'guwahati',
             'guwahati': 'guwahati',
-            'north laximpur': 'lakhimpur',
-            'north lakhimpur': 'lakhimpur',
-            'lakhimpur': 'lakhimpur',
-            'dibrugarh': 'dibrugarh',
-            'sivasagar': 'sivasagar',
-            'tezpur': 'tezpur',
-            'morigaon': 'morigaon',
-            'dhemaji': 'dhemaji',
-            'jorhat': 'jorhat',
             'cotton university': 'guwahati',
             'rajaduwar': 'guwahati',
             'guwahati university': 'guwahati',
@@ -350,14 +340,56 @@ class MuralChatbot {
             'khanapara': 'guwahati',
             'palasbari': 'guwahati',
             'light house': 'guwahati',
+            'lighthouse': 'guwahati',
             'bhakti': 'guwahati',
             'triveni': 'guwahati',
+            'rajdhani': 'guwahati',
+            'sinha lodge': 'guwahati',
+            'vishal mega': 'guwahati',
+            'backyard': 'guwahati',
+            'ganesguri': 'guwahati',
+            'b. borooah': 'guwahati',
+            'borooah': 'guwahati',
+            'dudhnoi': 'guwahati',
+            
+            // Lakhimpur District
+            'north lakhimpur': 'lakhimpur',
+            'north laximpur': 'lakhimpur',
+            'lakhimpur': 'lakhimpur',
             'gogamukh': 'lakhimpur',
-            'bishwanath': 'lakhimpur',
-            'demow': 'lakhimpur',
             'gauripur': 'lakhimpur',
+            'demow': 'lakhimpur',
+            'bishwanath': 'lakhimpur',
+            
+            // Jorhat
+            'jorhat': 'jorhat',
+            'gandi park': 'jorhat',
+            'stadium': 'jorhat',
+            
+            // Dibrugarh
+            'dibrugarh': 'dibrugarh',
+            'convoy road': 'dibrugarh',
+            'railway bridge': 'dibrugarh',
+            'dikhow': 'dibrugarh',
+            
+            // Sivasagar
+            'sivasagar': 'sivasagar',
+            'lahoty': 'sivasagar',
             'joysagar': 'sivasagar',
-            'dudhnoi': 'guwahati'
+            'bustand': 'sivasagar',
+            
+            // Tezpur
+            'tezpur': 'tezpur',
+            'dolabari': 'tezpur',
+            
+            // Morigaon
+            'morigaon': 'morigaon',
+            'bihutoli': 'morigaon',
+            
+            // Dhemaji
+            'dhemaji': 'dhemaji',
+            'dimow': 'dhemaji',
+            'engineering college': 'guwahati' // AEC is in Guwahati
         };
 
         const cityKeywords = {
@@ -374,6 +406,7 @@ class MuralChatbot {
         let matchedCity = null;
         const lowerQuery = query.toLowerCase();
 
+        // First check direct keywords
         for (const [city, keywords] of Object.entries(cityKeywords)) {
             if (keywords.some(keyword => lowerQuery.includes(keyword))) {
                 matchedCity = city;
@@ -382,7 +415,21 @@ class MuralChatbot {
         }
 
         if (!matchedCity) {
-            this.addMessage('🏙️ Which city are you interested in? Try: Guwahati, Jorhat, Lakhimpur, Dibrugarh, Sivasagar, or Tezpur', 'bot');
+            const cityList = `
+                <strong>🏙️ Available Cities with Murals:</strong>
+                <div style="margin: 10px 0; background: rgba(253, 187, 45, 0.15); padding: 12px; border-radius: 8px; border-left: 4px solid #fdbb2d;">
+                    <p style="margin: 0 0 8px 0;"><strong style="color: #fdbb2d;">Choose a city:</strong></p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Guwahati')" style="background: #fdbb2d; color: #1a0a2e; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Guwahati</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Jorhat')" style="background: #4ea0d2; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Jorhat</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Lakhimpur')" style="background: #a12373; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Lakhimpur</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Dibrugarh')" style="background: #816799; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Dibrugarh</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Sivasagar')" style="background: #f4a460; color: #1a0a2e; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Sivasagar</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Tezpur')" style="background: #3a9d7d; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Tezpur</button>
+                    </div>
+                </div>
+            `;
+            this.addMessage(cityList, 'bot');
             return;
         }
 
@@ -424,8 +471,10 @@ class MuralChatbot {
 
         let response = `<strong>🎨 Murals in ${matchedCity.toUpperCase()}:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">`;
         filteredMurals.forEach((mural, index) => {
+            const decLat = dmsToDecimal(mural.lat);
+            const decLng = dmsToDecimal(mural.lng);
             response += `
-                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${dmsToDecimal(mural.lat)}, ${dmsToDecimal(mural.lng)})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${decLat}, ${decLng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
                     <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
                     <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
                     <div style="font-size: 0.85rem; color: #aaa;">👤 Artist: ${mural.artist}</div>
