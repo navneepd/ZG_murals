@@ -491,7 +491,7 @@ const muralData = [
         name: "Joi Zubeen Da Mural",
         lat: 26.15263745,
         lng: 91.78443283,
-        locationDesc: "SINHA LODGE",
+        locationDesc: "Hotel Kamrupa",
         description: "A bright, celebratory mural featuring Zubeen Da with an infectious smile and a traditional blue Assamese paga. Painted in vivid yellow and green, the artwork is crowned with the phrase \"জয় জুবিন দা\" (Joi Zubeen Da), serving as a powerful, Cultural Shrine of affection and respect for the beloved artist.",
         artist: "Gautam Das",
         status: "Marked",
