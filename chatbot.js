@@ -317,6 +317,39 @@ class MuralChatbot {
     }
 
     handleLocationQuery(query) {
+        // Map of locations to their city names
+        const locationCityMap = {
+            'gandi park': 'jorhat',
+            'outside wall of the stadium': 'jorhat',
+            'dispur': 'guwahati',
+            'flyover': 'guwahati',
+            'guwahati': 'guwahati',
+            'north laximpur': 'lakhimpur',
+            'north lakhimpur': 'lakhimpur',
+            'lakhimpur': 'lakhimpur',
+            'dibrugarh': 'dibrugarh',
+            'sivasagar': 'sivasagar',
+            'tezpur': 'tezpur',
+            'morigaon': 'morigaon',
+            'dhemaji': 'dhemaji',
+            'jorhat': 'jorhat',
+            'cotton university': 'guwahati',
+            'rajaduwar': 'guwahati',
+            'guwahati university': 'guwahati',
+            'rangia': 'guwahati',
+            'khanapara': 'guwahati',
+            'palasbari': 'guwahati',
+            'light house': 'guwahati',
+            'bhakti': 'guwahati',
+            'triveni': 'guwahati',
+            'gogamukh': 'lakhimpur',
+            'bishwanath': 'lakhimpur',
+            'demow': 'lakhimpur',
+            'gauripur': 'lakhimpur',
+            'joysagar': 'sivasagar',
+            'dudhnoi': 'guwahati'
+        };
+
         const cityKeywords = {
             guwahati: ['guwahati', 'dispur'],
             jorhat: ['jorhat'],
@@ -343,9 +376,26 @@ class MuralChatbot {
             return;
         }
 
-        const filteredMurals = muralData.filter(mural => 
-            mural.locationDesc && mural.locationDesc.toLowerCase().includes(matchedCity)
-        );
+        // Filter murals by matching location descriptions with city mapping
+        const filteredMurals = muralData.filter(mural => {
+            if (!mural.locationDesc) return false;
+            
+            const locDesc = mural.locationDesc.toLowerCase();
+            
+            // First check direct city keyword match
+            for (const keyword of cityKeywords[matchedCity]) {
+                if (locDesc.includes(keyword)) return true;
+            }
+            
+            // Then check location city mapping
+            for (const [location, city] of Object.entries(locationCityMap)) {
+                if (city === matchedCity && locDesc.includes(location)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        });
 
         if (filteredMurals.length === 0) {
             this.addMessage(`😔 No murals found in ${matchedCity}.`, 'bot');
@@ -355,7 +405,7 @@ class MuralChatbot {
         let response = `<strong>🎨 Murals in ${matchedCity.toUpperCase()}:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">`;
         filteredMurals.forEach((mural, index) => {
             response += `
-                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${mural.lat}, ${mural.lng})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
+                <div class="mural-card-clickable" onclick="window.muralChatbot.showMuralDetail('${mural.name}', ${dmsToDecimal(mural.lat)}, ${dmsToDecimal(mural.lng)})" style="cursor: pointer; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 3px solid #fdbb2d; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(0)'">
                     <strong style="color: #fdbb2d;">${index + 1}. ${mural.name}</strong>
                     <div style="font-size: 0.9rem; color: #ddd; margin-top: 4px;">📍 ${mural.locationDesc}</div>
                     <div style="font-size: 0.85rem; color: #aaa;">👤 Artist: ${mural.artist}</div>
