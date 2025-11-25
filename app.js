@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
+let currentPopup = null;
+
 function initializeApp() {
     console.log("🗺️ Initializing map...");
     
@@ -34,17 +36,14 @@ function initializeApp() {
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
     
-    // Prevent map click from closing popups when clicking on popup content
+    // Close custom popup when clicking on map
     map.on('click', function(e) {
-        // Only close popup if clicking on map, not on popup
-        const popup = map._popup;
-        if (popup) {
-            const popupElement = popup.getElement();
-            if (popupElement && popupElement.contains(e.originalEvent.target)) {
-                e.originalEvent.stopPropagation();
-                return;
-            }
+        // Don't close if clicking on popup
+        if (currentPopup && currentPopup.contains(e.originalEvent.target)) {
+            e.originalEvent.stopPropagation();
+            return;
         }
+        closeCustomPopup();
     });
     
     // Statistics
@@ -82,37 +81,10 @@ function initializeApp() {
         if (lat && lng) {
             const marker = L.marker([lat, lng]);
 
-            // Create popup content immediately (not lazily)
-            const popupContent = createPopupContent(mural, index);
-            
-            // Determine popup width based on screen size
-            const isMobile = window.innerWidth <= 480;
-            const maxWidth = isMobile ? Math.min(window.innerWidth - 40, 350) : 400;
-            const maxHeight = isMobile ? Math.min(window.innerHeight - 120, 500) : 600;
-            
-            // Bind popup with the full content
-            marker.bindPopup(popupContent, {
-                className: 'centered-popup',
-                maxWidth: maxWidth,
-                maxHeight: maxHeight,
-                autoPan: true,
-                autoPanPadding: [50, 50],
-                closeButton: true,
-                closeOnClick: false
-            });
-
-            // Prevent popup from closing when clicking inside it
-            marker.on('popupopen', function() {
-                const popup = marker.getPopup();
-                if (popup) {
-                    const popupElement = popup.getElement();
-                    if (popupElement) {
-                        popupElement.style.pointerEvents = 'auto';
-                        popupElement.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                        });
-                    }
-                }
+            // Click marker to show custom popup instead of Leaflet popup
+            marker.on('click', function(e) {
+                L.DomEvent.stopPropagation(e);
+                showCustomPopup(mural, index, e.latlng);
             });
 
             // Add marker to the cluster group (not directly to the map)
@@ -297,6 +269,51 @@ window.closeFullscreen = function() {
         document.body.style.overflow = '';
     }
 };
+
+// Custom popup system (not using Leaflet popups)
+function showCustomPopup(mural, index, latlng) {
+    // Close existing popup
+    closeCustomPopup();
+    
+    // Create popup container
+    const popupDiv = document.createElement('div');
+    popupDiv.className = 'custom-map-popup';
+    popupDiv.innerHTML = `
+        <div class="custom-popup-content">
+            <button class="custom-popup-close" onclick="closeCustomPopup()">✕</button>
+            <h3 class="popup-title">${mural.name}</h3>
+            <div class="popup-image-container">
+                ${createPopupImages(mural.images, mural.name, index)}
+            </div>
+            <div class="popup-artist"><strong>Artist:</strong> ${mural.artist || 'Unknown'}</div>
+            <div class="popup-description"><strong>Description:</strong> ${mural.description}</div>
+            <div class="popup-location"><strong>Location:</strong> ${mural.locationDesc}</div>
+            <div style="margin-top: 10px;">
+                <button class="fullscreen-btn" onclick="closeCustomPopup(); openFullscreen(${index});">📱 Fullscreen View</button>
+            </div>
+        </div>
+    `;
+    
+    // Prevent clicks inside popup from closing it
+    popupDiv.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Add popup to map container
+    document.querySelector('.map-container').appendChild(popupDiv);
+    currentPopup = popupDiv;
+}
+
+function closeCustomPopup() {
+    if (currentPopup) {
+        try {
+            currentPopup.remove();
+        } catch (e) {
+            // Already removed
+        }
+        currentPopup = null;
+    }
+}
 
 // Close fullscreen with ESC key
 document.addEventListener('keydown', function(e) {
