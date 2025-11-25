@@ -181,16 +181,20 @@ footer {
 .centered-popup .leaflet-popup-content-wrapper {
     text-align: center;
     border-radius: 15px;
+    background: white !important;
 }
 
 .centered-popup .leaflet-popup-content {
     margin: 15px;
     text-align: center;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .popup-content {
     text-align: center;
     max-width: 300px;
+    display: block;
 }
 
 .popup-title {
@@ -1047,6 +1051,32 @@ footer {
 }
 
 @media (max-width: 480px) {
+    /* Mobile Popup Styles */
+    .centered-popup .leaflet-popup {
+        margin-bottom: 0 !important;
+    }
+    
+    .centered-popup .leaflet-popup-content-wrapper {
+        max-width: calc(100vw - 40px) !important;
+        max-height: calc(100vh - 100px) !important;
+        overflow-y: auto;
+    }
+    
+    .popup-content {
+        max-width: calc(100vw - 60px);
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
+    }
+    
+    .popup-images-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .popup-image-container {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    
     .chatbot-container {
         width: calc(100% - 20px);
         max-height: 500px;

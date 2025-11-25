@@ -72,11 +72,18 @@ function initializeApp() {
             // Create popup content immediately (not lazily)
             const popupContent = createPopupContent(mural, index);
             
+            // Determine popup width based on screen size
+            const isMobile = window.innerWidth <= 480;
+            const maxWidth = isMobile ? Math.min(window.innerWidth - 40, 350) : 400;
+            const maxHeight = isMobile ? Math.min(window.innerHeight - 120, 500) : 600;
+            
             // Bind popup with the full content
             marker.bindPopup(popupContent, {
                 className: 'centered-popup',
-                maxWidth: 400,
-                maxHeight: 600
+                maxWidth: maxWidth,
+                maxHeight: maxHeight,
+                autoPan: true,
+                autoPanPadding: [50, 50]
             });
 
             // Add marker to the cluster group (not directly to the map)
