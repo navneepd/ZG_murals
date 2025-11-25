@@ -69,23 +69,14 @@ function initializeApp() {
         if (lat && lng) {
             const marker = L.marker([lat, lng]);
 
-            // Bind a lightweight placeholder popup and generate full content only when opened
-            marker.bindPopup('<div class="popup-loading">Loading…</div>', {
-                className: 'centered-popup'
-            });
-
-            // When the popup opens, generate the full content (reduces startup cost on mobile)
-            marker.on('popupopen', function () {
-                try {
-                    // Only set content if it's still the placeholder (avoid regenerating)
-                    const current = marker.getPopup().getContent();
-                    if (!current || typeof current === 'string' && current.indexOf('popup-loading') !== -1) {
-                        const content = createPopupContent(mural, index);
-                        marker.setPopupContent(content);
-                    }
-                } catch (e) {
-                    // ignore errors in rare edge cases
-                }
+            // Create popup content immediately (not lazily)
+            const popupContent = createPopupContent(mural, index);
+            
+            // Bind popup with the full content
+            marker.bindPopup(popupContent, {
+                className: 'centered-popup',
+                maxWidth: 400,
+                maxHeight: 600
             });
 
             // Add marker to the cluster group (not directly to the map)
