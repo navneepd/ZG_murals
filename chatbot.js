@@ -18,7 +18,7 @@ class MuralChatbot {
     getMuralFacts() {
         return {
             facts: [
-                { emoji: "🎵", fact: "Zubeen Garg has recorded over 40000+ songs Asamese,Hind,English, and other languages, making him one of the most prolific musicians in India." },
+                { emoji: "🎵", fact: "Zubeen Garg has recorded over 38000+ songs in Assamese, Hindi, English, and other languages, making him one of the most prolific musicians in India." },
                 { emoji: "🏛️", fact: "The murals across Assam represent over 50+ artists collaborating to celebrate Zubeen Da's legacy and cultural impact on the state." },
                 { emoji: "📍", fact: "Zubeen Garg murals are spread across 8+ districts of Assam - from Guwahati to Dhemaji, creating a 'Ballad Trail' of artistic tributes." },
                 { emoji: "🎨", fact: "Each mural tells a unique story - some capture him in concert mode, others show him as a cultural revolutionary and poet." },
