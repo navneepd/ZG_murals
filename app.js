@@ -34,6 +34,19 @@ function initializeApp() {
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
     
+    // Prevent map click from closing popups when clicking on popup content
+    map.on('click', function(e) {
+        // Only close popup if clicking on map, not on popup
+        const popup = map._popup;
+        if (popup) {
+            const popupElement = popup.getElement();
+            if (popupElement && popupElement.contains(e.originalEvent.target)) {
+                e.originalEvent.stopPropagation();
+                return;
+            }
+        }
+    });
+    
     // Statistics
     const stats = calculateStats();
     document.getElementById('total-murals').textContent = stats.totalMurals;
@@ -83,7 +96,23 @@ function initializeApp() {
                 maxWidth: maxWidth,
                 maxHeight: maxHeight,
                 autoPan: true,
-                autoPanPadding: [50, 50]
+                autoPanPadding: [50, 50],
+                closeButton: true,
+                closeOnClick: false
+            });
+
+            // Prevent popup from closing when clicking inside it
+            marker.on('popupopen', function() {
+                const popup = marker.getPopup();
+                if (popup) {
+                    const popupElement = popup.getElement();
+                    if (popupElement) {
+                        popupElement.style.pointerEvents = 'auto';
+                        popupElement.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                }
             });
 
             // Add marker to the cluster group (not directly to the map)
@@ -99,7 +128,7 @@ function initializeApp() {
 // Create centered popup content with side-by-side images
 function createPopupContent(mural, index) {
     return `
-        <div class="popup-content">
+        <div class="popup-content" style="pointer-events: auto;">
             <h3 class="popup-title">${mural.name}</h3>
             <div class="popup-image-container">
                 ${createPopupImages(mural.images, mural.name, index)}
@@ -107,8 +136,8 @@ function createPopupContent(mural, index) {
             <div class="popup-artist"><strong>Artist:</strong> ${mural.artist || 'Unknown'}</div>
             <div class="popup-description"><strong>Description:</strong> ${mural.description}</div>
             <div class="popup-location"><strong>Location:</strong> ${mural.locationDesc}</div>
-            <div style="margin-top: 10px;">
-                <button class="fullscreen-btn" onclick="event.stopPropagation(); openFullscreen(${index})">📱 Fullscreen View</button>
+            <div style="margin-top: 10px; pointer-events: auto;">
+                <button class="fullscreen-btn" onclick="event.preventDefault(); event.stopPropagation(); openFullscreen(${index}); return false;">📱 Fullscreen View</button>
             </div>
         </div>
     `;
@@ -122,14 +151,14 @@ function createPopupImages(images, muralName, index) {
     
     // Single image
     if (images.length === 1) {
-        return `<img src="Images/${cleanImageFileName(images[0])}" alt="${muralName}" class="popup-main-image single-image" loading="lazy" onclick="event.stopPropagation(); openFullscreen(${index})">`;
+        return `<img src="Images/${cleanImageFileName(images[0])}" alt="${muralName}" class="popup-main-image single-image" loading="lazy" onclick="event.preventDefault(); event.stopPropagation(); openFullscreen(${index}); return false;">`;
     }
     
     // Multiple images - grid
     let gridHTML = '<div class="popup-images-grid">';
     for (let i = 0; i < images.length; i++) {
         const cleanName = cleanImageFileName(images[i]);
-        gridHTML += `<div class="popup-image-item"><img src="Images/${cleanName}" alt="${muralName}" class="popup-grid-image" loading="lazy" onclick="event.stopPropagation(); openFullscreen(${index})"><div class="image-counter">${i + 1}/${images.length}</div></div>`;
+        gridHTML += `<div class="popup-image-item"><img src="Images/${cleanName}" alt="${muralName}" class="popup-grid-image" loading="lazy" onclick="event.preventDefault(); event.stopPropagation(); openFullscreen(${index}); return false;"><div class="image-counter">${i + 1}/${images.length}</div></div>`;
     }
     gridHTML += '</div>';
     return gridHTML;
