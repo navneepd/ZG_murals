@@ -187,7 +187,8 @@ footer {
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     z-index: 10000;
-    max-width: 90vw;
+    width: 90vw;
+    max-width: 400px;
     max-height: 90vh;
     overflow-y: auto;
     pointer-events: auto;
@@ -233,17 +234,30 @@ footer {
     background: #c0392b;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .custom-map-popup {
-        max-width: calc(100vw - 20px);
-        max-height: calc(100vh - 60px);
+        width: 98vw;
+        max-width: 98vw;
+        max-height: 90vh;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        border-radius: 10px;
+        padding: 0;
     }
-    
     .custom-popup-content {
-        padding: 15px;
+        padding: 10px;
+    }
+    .popup-title {
+        font-size: 1.1rem;
+    }
+    .popup-image-container {
+        max-height: 180px;
+        overflow-y: auto;
+    }
+    .fullscreen-btn {
+        font-size: 1rem;
+        padding: 10px 0;
     }
 }
 
