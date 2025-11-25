@@ -100,33 +100,16 @@ function initializeApp() {
 function createPopupContent(mural, index) {
     return `
         <div class="popup-content">
-            <!-- Mural Name - Centered -->
             <h3 class="popup-title">${mural.name}</h3>
-            
-            <!-- Images - Side by side if multiple -->
             <div class="popup-image-container">
                 ${createPopupImages(mural.images, mural.name, index)}
             </div>
-            
-            <!-- Artist Name - Centered -->
-            <div class="popup-artist">
-                <strong>Artist:</strong> ${mural.artist || 'Unknown'}
+            <div class="popup-artist"><strong>Artist:</strong> ${mural.artist || 'Unknown'}</div>
+            <div class="popup-description"><strong>Description:</strong> ${mural.description}</div>
+            <div class="popup-location"><strong>Location:</strong> ${mural.locationDesc}</div>
+            <div style="margin-top: 10px;">
+                <button class="fullscreen-btn" onclick="event.stopPropagation(); openFullscreen(${index})">📱 Fullscreen View</button>
             </div>
-            
-            <!-- Description - Centered -->
-            <div class="popup-description">
-                <strong>Description:</strong> ${mural.description}
-            </div>
-            
-            <!-- Location - Centered -->
-            <div class="popup-location">
-                <strong>Location:</strong> ${mural.locationDesc}
-            </div>
-            
-            <!-- Fullscreen Button - Centered -->
-            <button class="fullscreen-btn" onclick="openFullscreen(${index})">
-                📱 Fullscreen View
-            </button>
         </div>
     `;
 }
@@ -139,30 +122,17 @@ function createPopupImages(images, muralName, index) {
     
     // Single image
     if (images.length === 1) {
-        return `
-            <img src="Images/${cleanImageFileName(images[0])}" 
-                 alt="${muralName}" 
-                 class="popup-main-image single-image"
-                 loading="lazy"
-                 onclick="openFullscreen(${index})">
-        `;
+        return `<img src="Images/${cleanImageFileName(images[0])}" alt="${muralName}" class="popup-main-image single-image" loading="lazy" onclick="event.stopPropagation(); openFullscreen(${index})">`;
     }
     
-    // Multiple images - side by side
-    return `
-        <div class="popup-images-grid">
-            ${images.map((img, imgIndex) => `
-                <div class="popup-image-item">
-                <img src="Images/${cleanImageFileName(img)}" 
-                    alt="${muralName}" 
-                    class="popup-grid-image"
-                    loading="lazy"
-                    onclick="openFullscreen(${index})">
-                    ${images.length > 1 ? `<div class="image-counter">${imgIndex + 1}/${images.length}</div>` : ''}
-                </div>
-            `).join('')}
-        </div>
-    `;
+    // Multiple images - grid
+    let gridHTML = '<div class="popup-images-grid">';
+    for (let i = 0; i < images.length; i++) {
+        const cleanName = cleanImageFileName(images[i]);
+        gridHTML += `<div class="popup-image-item"><img src="Images/${cleanName}" alt="${muralName}" class="popup-grid-image" loading="lazy" onclick="event.stopPropagation(); openFullscreen(${index})"><div class="image-counter">${i + 1}/${images.length}</div></div>`;
+    }
+    gridHTML += '</div>';
+    return gridHTML;
 }
 
 function focusOnMural(mural, index) {
