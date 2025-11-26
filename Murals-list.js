@@ -6,32 +6,32 @@ function dmsToDecimal(dms) {
     if (typeof dms === 'number') {
         return dms;
     }
-    
+
     if (!dms || dms.trim() === '') return null;
-    
+
     // Check if it's already a decimal number (string format like "26.75174597")
     const decimalValue = parseFloat(dms);
     if (!isNaN(decimalValue) && dms.toString().indexOf('°') === -1) {
         return decimalValue;
     }
-    
+
     // Remove any extra spaces and split the string (DMS format)
     const cleanDms = dms.replace(/\s+/g, '');
     const parts = cleanDms.split(/[°'"]/).filter(part => part.trim() !== '');
-    
+
     if (parts.length < 4) return null;
-    
+
     const degrees = parseFloat(parts[0]);
     const minutes = parseFloat(parts[1]);
     const seconds = parseFloat(parts[2]);
     const direction = parts[3].trim();
-    
+
     let decimal = degrees + minutes / 60 + seconds / 3600;
-    
+
     if (direction === 'S' || direction === 'W') {
         decimal = -decimal;
     }
-    
+
     return decimal;
 }
 
@@ -57,7 +57,7 @@ const muralData = [
         status: "Marked",
         images: ["North_Lakhimpur.png"]
     },
-       {
+    {
         name: "The Voice of the Brahmaputra",
         lat: "27°41'1.02\"N",
         lng: "94°48'33.80\"E",
@@ -81,7 +81,7 @@ const muralData = [
         name: "Jorhat stadium Murals",
         lat: "26°45'18.42\"N",
         lng: "94°12'21.99\"E",
-        locationDesc: "Outside wall of the stadium",
+        locationDesc: "Outside wall of the stadium, Jorhat",
         description: "Various artists came together to paint heartfelt murals in memory of Zubeen Da, celebrating his music, spirit, and legacy",
         artist: "snigdho & various artist(Reach out to me for credits)",
         status: "Marked",
@@ -261,13 +261,13 @@ const muralData = [
         name: "The King's Gaze",
         lat: "26°50'56.23\"N",
         lng: "94°29'39.07\"E",
-        locationDesc: "Jhanji-Jamuguri Road",
+        locationDesc: "Jhanji-Jamuguri Road, Jorhat",
         description: "The flyover walls are alive with the charismatic gaze and golden shine of Zubeen Da.",
         artist: "Dhruvajyoti_Dutta & Mousum_Gogoi",
         status: "Marked",
         images: ["Janji_Mural_3.jpg"]
     },
-      {
+    {
         name: "The Heartbeat of the Stage",
         lat: "26°50'56.84\"N",
         lng: "94°29'39.36\"E",
@@ -317,7 +317,7 @@ const muralData = [
         status: "Marked",
         images: ["RKB_hostel.jpg"]
     },
-       {
+    {
         name: "Long hair Zubeen Da Mural",
         lat: "26° 8'34.34\"N",
         lng: "91°47'37.19\"E",
@@ -327,7 +327,7 @@ const muralData = [
         status: "Marked",
         images: ["Dispur_mural_3.jpg", "Dispur_mural_4.jpg"]
     },
-        {
+    {
         name: "Colonel Zubeen Da",
         lat: "26°54'37.80\"N",
         lng: "94°44'12.15\"E",
@@ -502,14 +502,14 @@ const muralData = [
 // Function to determine marker color based on location
 function getMarkerColor(locationDesc) {
     if (!locationDesc) return '#2ecc71'; // Green for other locations
-    
+
     const desc = locationDesc.toLowerCase();
     if (desc.includes('guwahati') || desc.includes('dispur')) {
         return '#e74c3c'; // Red for major cities
-    } else if (desc.includes('nazira') || desc.includes('sivasagar') || 
-              desc.includes('lakhimpur') || desc.includes('jorhat') ||
-              desc.includes('morigaon') || desc.includes('dhemaji') ||
-              desc.includes('dibrugarh') || desc.includes('north laximpur')) {
+    } else if (desc.includes('nazira') || desc.includes('sivasagar') ||
+        desc.includes('lakhimpur') || desc.includes('jorhat') ||
+        desc.includes('morigaon') || desc.includes('dhemaji') ||
+        desc.includes('dibrugarh') || desc.includes('north laximpur')) {
         return '#3498db'; // Blue for towns/villages
     } else {
         return '#2ecc71'; // Green for other locations
@@ -519,7 +519,7 @@ function getMarkerColor(locationDesc) {
 // Calculate statistics
 function calculateStats() {
     const totalMurals = muralData.length;
-    
+
     // Count unique cities/towns
     const locations = muralData.map(mural => {
         if (!mural.locationDesc) return 'Unknown';
@@ -536,15 +536,15 @@ function calculateStats() {
     });
     const uniqueLocations = new Set(locations);
     const citiesCount = uniqueLocations.size;
-    
+
     // Count artists (excluding empty strings)
     const artists = muralData.map(mural => mural.artist).filter(artist => artist && artist.trim() !== '');
     const uniqueArtists = new Set(artists);
     const artistsCount = uniqueArtists.size;
-    
+
     // Count total images
     const imagesCount = muralData.reduce((total, mural) => total + mural.images.length, 0);
-    
+
     return {
         totalMurals,
         citiesCount,
@@ -566,14 +566,14 @@ function createImageDisplay(images, muralName) {
     if (!images || images.length === 0) {
         return '<p><em>No images available</em></p>';
     }
-    
+
     let html = '<div class="popup-images"><strong>Images:</strong><div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">';
-    
+
     images.forEach(img => {
         const cleanImg = cleanImageFileName(img);
         // Use local images from the images folder
         const imageUrl = `Images/${cleanImg}`;
-        
+
         html += `
             <div style="flex: 1; min-width: 120px; text-align: center;">
                 <img src="${imageUrl}" alt="${muralName}" class="image-thumbnail">
@@ -581,7 +581,7 @@ function createImageDisplay(images, muralName) {
             </div>
         `;
     });
-    
+
     html += '</div></div>';
     return html;
 }
