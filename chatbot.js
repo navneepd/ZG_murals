@@ -613,15 +613,29 @@ class MuralChatbot {
         });
 
         if (filteredMurals.length === 0) {
+            const capitalizedCity = matchedCity.charAt(0).toUpperCase() + matchedCity.slice(1);
             const noMuralsMsg = `
-                <strong>😔 No murals found in ${matchedCity}</strong>
-                <p>We haven't documented any murals in ${matchedCity} yet, but there might be some we haven't found!</p>
-                <p><strong>📸 Help us grow the collection:</strong></p>
-                <p>If you know of a Zubeen Garg mural or public art tribute in or around ${matchedCity}, please share it with us!</p>
-                <p style="background: rgba(253, 187, 45, 0.2); padding: 12px; border-radius: 8px; border-left: 4px solid #fdbb2d;">
-                    <strong>📧 Email:</strong> <a href="mailto:das.navneep09@gmail.com?subject=New Mural in ${matchedCity} - Zubeen Garg&body=City: ${matchedCity}%0ALocation: %0ADescription: %0AArtist (if known): %0AImages attached: " style="color: #fdbb2d;">das.navneep09@gmail.com</a>
-                </p>
-                <p style="font-size: 0.9rem; color: #aaa;">Include the exact location, description, artist name (if known), and any photos!</p>
+                <div style="background: rgba(231, 76, 60, 0.1); padding: 16px; border-radius: 12px; border-left: 4px solid #e74c3c; margin: 10px 0;">
+                    <strong style="color: #e74c3c; font-size: 1.1rem;">😔 No murals found in ${capitalizedCity}</strong>
+                    <p style="margin: 12px 0;">We haven't documented any Zubeen Garg murals in ${capitalizedCity} yet, but there might be some we haven't discovered!</p>
+                </div>
+                
+                <div style="background: rgba(253, 187, 45, 0.15); padding: 16px; border-radius: 12px; border-left: 4px solid #fdbb2d; margin: 10px 0;">
+                    <p style="margin: 0 0 12px 0;"><strong style="color: #fdbb2d; font-size: 1.05rem;">📸 Have you seen a Zubeen Garg mural?</strong></p>
+                    <p style="margin: 8px 0;">Help us grow this collection! If you know of any Zubeen Garg murals or public art tributes in or around ${capitalizedCity}, we'd love to add them to our map.</p>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 14px; border-radius: 8px; margin: 12px 0;">
+                        <p style="margin: 0 0 8px 0;"><strong style="color: #fdbb2d;">📧 Submit a Mural:</strong></p>
+                        <a href="mailto:das.navneep09@gmail.com?subject=New Mural Submission - ${capitalizedCity}&body=Hi! I found a Zubeen Garg mural in ${capitalizedCity}!%0A%0ACity: ${capitalizedCity}%0AExact Location: %0ADescription: %0AArtist (if known): %0A%0AI'll attach photos separately.%0A%0AThank you!" 
+                           style="display: inline-block; background: #fdbb2d; color: #1a0a2e; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 8px; transition: all 0.3s;"
+                           onmouseover="this.style.background='#ffc850'"
+                           onmouseout="this.style.background='#fdbb2d'">
+                            ✉️ Email Us Your Discovery
+                        </a>
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; color: #999; margin: 8px 0 0 0;">💡 Please include: exact location, description, artist name (if known), and photos!</p>
+                </div>
             `;
             this.addMessage(noMuralsMsg, 'bot');
             return;
