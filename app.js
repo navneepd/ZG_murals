@@ -6,19 +6,19 @@ let fullscreenPopup = null;
 let markersGroup = null;
 
 // Wait for everything to load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("📄 DOM loaded, initializing app...");
-    
+
     if (typeof L === 'undefined') {
         console.error("❌ Leaflet not loaded");
         return;
     }
-    
+
     if (typeof muralData === 'undefined') {
         console.error("❌ muralData not found");
         return;
     }
-    
+
     console.log("✅ All dependencies loaded, starting initialization...");
     initializeApp();
 });
@@ -27,17 +27,17 @@ let currentPopup = null;
 
 function initializeApp() {
     console.log("🗺️ Initializing map...");
-    
+
     // Create map
     map = L.map('map').setView([26.5, 92.5], 8);
-    
+
     // Add tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap'
     }).addTo(map);
-    
+
     // Close custom popup when clicking on map
-    map.on('click', function(e) {
+    map.on('click', function (e) {
         // Don't close if clicking on popup
         if (currentPopup && currentPopup.contains(e.originalEvent.target)) {
             e.originalEvent.stopPropagation();
@@ -45,20 +45,20 @@ function initializeApp() {
         }
         closeCustomPopup();
     });
-    
+
     // Statistics
     const stats = calculateStats();
     document.getElementById('total-murals').textContent = stats.totalMurals;
     document.getElementById('cities-count').textContent = stats.citiesCount;
     document.getElementById('artists-count').textContent = stats.artistsCount;
     document.getElementById('images-count').textContent = stats.imagesCount;
-    
+
     // Create mural list and markers
     const muralList = document.getElementById('mural-list');
 
     // Create a marker cluster group to handle overlapping markers
     markersGroup = L.markerClusterGroup();
-    
+
     muralData.forEach((mural, index) => {
         // Create list item
         const item = document.createElement('div');
@@ -67,22 +67,22 @@ function initializeApp() {
             <div class="mural-name">${mural.name}</div>
             <div class="mural-location">${mural.locationDesc || 'No location'}</div>
         `;
-        
-        item.addEventListener('click', function() {
+
+        item.addEventListener('click', function () {
             focusOnMural(mural, index);
         });
-        
+
         muralList.appendChild(item);
-        
+
         // Create marker
         const lat = dmsToDecimal(mural.lat);
         const lng = dmsToDecimal(mural.lng);
-        
+
         if (lat && lng) {
             const marker = L.marker([lat, lng]);
 
             // Click marker to show custom popup instead of Leaflet popup
-            marker.on('click', function(e) {
+            marker.on('click', function (e) {
                 L.DomEvent.stopPropagation(e);
                 showCustomPopup(mural, index, e.latlng);
             });
@@ -120,12 +120,12 @@ function createPopupImages(images, muralName, index) {
     if (!images || images.length === 0) {
         return '<p class="no-image">No image available</p>';
     }
-    
+
     // Single image
     if (images.length === 1) {
         return `<img src="Images/${cleanImageFileName(images[0])}" alt="${muralName}" class="popup-main-image single-image" loading="lazy" onclick="event.preventDefault(); event.stopPropagation(); openFullscreen(${index}); return false;">`;
     }
-    
+
     // Multiple images - grid
     let gridHTML = '<div class="popup-images-grid">';
     for (let i = 0; i < images.length; i++) {
@@ -139,22 +139,22 @@ function createPopupImages(images, muralName, index) {
 function focusOnMural(mural, index) {
     const lat = dmsToDecimal(mural.lat);
     const lng = dmsToDecimal(mural.lng);
-    
+
     if (lat && lng) {
         // Scroll to map
-        document.querySelector('.map-container').scrollIntoView({ 
-            behavior: 'smooth' 
+        document.querySelector('.map-container').scrollIntoView({
+            behavior: 'smooth'
         });
-        
+
         // Center on mural
         map.setView([lat, lng], 15);
-        
+
         // Open popup after delay
         setTimeout(() => {
             // Prefer searching markers in the global markersGroup (markercluster)
             let opened = false;
             if (markersGroup && typeof markersGroup.eachLayer === 'function') {
-                markersGroup.eachLayer(function(subLayer) {
+                markersGroup.eachLayer(function (subLayer) {
                     if (subLayer instanceof L.Marker) {
                         const mLat = subLayer.getLatLng().lat;
                         const mLng = subLayer.getLatLng().lng;
@@ -168,7 +168,7 @@ function focusOnMural(mural, index) {
 
             // Fallback: check all map layers
             if (!opened) {
-                map.eachLayer(function(layer) {
+                map.eachLayer(function (layer) {
                     if (layer instanceof L.Marker) {
                         const markerLat = layer.getLatLng().lat;
                         const markerLng = layer.getLatLng().lng;
@@ -184,19 +184,19 @@ function focusOnMural(mural, index) {
 }
 
 // Fullscreen functions
-window.openFullscreen = function(index) {
+window.openFullscreen = function (index) {
     console.log("🖥️ Opening fullscreen for mural index:", index);
     const mural = muralData[index];
-    
+
     // Close any existing popup
     if (fullscreenPopup) {
         document.body.removeChild(fullscreenPopup);
     }
-    
+
     // Create fullscreen overlay
     fullscreenPopup = document.createElement('div');
     fullscreenPopup.className = 'fullscreen-popup';
-    
+
     fullscreenPopup.innerHTML = `
         <div class="fullscreen-content">
             <button class="close-fullscreen-btn" onclick="closeFullscreen()">×</button>
@@ -219,10 +219,10 @@ window.openFullscreen = function(index) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(fullscreenPopup);
     document.body.style.overflow = 'hidden';
-    
+
     // Close popup on map
     map.closePopup();
 };
@@ -232,7 +232,7 @@ function createFullscreenImages(images, muralName) {
     if (!images || images.length === 0) {
         return '<p class="no-image">No image available</p>';
     }
-    
+
     // Single image in fullscreen
     if (images.length === 1) {
         return `
@@ -245,7 +245,7 @@ function createFullscreenImages(images, muralName) {
             </div>
         `;
     }
-    
+
     // Multiple images in fullscreen - side by side
     return `
         <div class="fullscreen-images-grid">
@@ -262,7 +262,7 @@ function createFullscreenImages(images, muralName) {
     `;
 }
 
-window.closeFullscreen = function() {
+window.closeFullscreen = function () {
     if (fullscreenPopup) {
         document.body.removeChild(fullscreenPopup);
         fullscreenPopup = null;
@@ -274,7 +274,7 @@ window.closeFullscreen = function() {
 function showCustomPopup(mural, index, latlng) {
     // Close existing popup
     closeCustomPopup();
-    
+
     // Create popup container
     const popupDiv = document.createElement('div');
     popupDiv.className = 'custom-map-popup';
@@ -293,14 +293,14 @@ function showCustomPopup(mural, index, latlng) {
             </div>
         </div>
     `;
-    
+
     // Prevent clicks inside popup from closing it
-    popupDiv.addEventListener('click', function(e) {
+    popupDiv.addEventListener('click', function (e) {
         e.stopPropagation();
     });
-    
-    // Add popup to map container
-    document.querySelector('.map-container').appendChild(popupDiv);
+
+    // Add popup to document body (better for mobile/z-index)
+    document.body.appendChild(popupDiv);
     currentPopup = popupDiv;
 }
 
@@ -316,7 +316,7 @@ function closeCustomPopup() {
 }
 
 // Close fullscreen with ESC key
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && fullscreenPopup) {
         closeFullscreen();
     }
