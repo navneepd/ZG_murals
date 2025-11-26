@@ -45,6 +45,7 @@ const muralData = [
         description: "The unforgettable connection between Zubeen Da and his fans, painted for all to see. His music is his gift, and his outstretched arm is a benediction over his Fans. A gorgeous tribute to the legend who gave his heart to the people.",
         artist: "Neelim Mahanta and Team",
         status: "Marked",
+        city: "Guwahati",
         images: ["Dispur_mural_1.jpg", "Dispur_mural_2.jpg"]
     },
     {
@@ -55,6 +56,7 @@ const muralData = [
         description: "This incredible mural captures Zubeen Da in his free-spirited, bohemian style. Right beside his compelling gaze is the iconic phrase 'মই জাই' (Mon Jaai),It's a powerful symbol of the voice that speaks for the heart and the restless, rebellious spirit that defines Zubeen Da's enduring legacy in Assam. মন যায়-forever in our hearts.",
         artist: "Neelim Mahanta",
         status: "Marked",
+        city: "Lakhimpur",
         images: ["North_Lakhimpur.png"]
     },
     {
@@ -65,6 +67,7 @@ const muralData = [
         description: "This exquisite artwork is a vibrant tribute to Zubeen Da's connection to his land. He is pictured wearing a traditional Jaapi (Assamese conical hat) and singing passionately, with a collage of Assam's seasonal landscapes forming the background. It celebrates him as the true voice of the state's nature and culture.",
         artist: "mino_patir,Ruhiteswar_Moran, Gobin_Taye & na.kull",
         status: "Marked",
+        city: "Dhemaji",
         images: ["Mino_dhemaji mural.png"]
     },
     {
@@ -75,6 +78,7 @@ const muralData = [
         description: "Unveiled mural honoring Zubeen Da",
         artist: "Snigdho_Junak & abhinayan_boruah",
         status: "Marked",
+        city: "Jorhat",
         images: ["Gandhi park.jpg"]
     },
     {
@@ -85,6 +89,7 @@ const muralData = [
         description: "Various artists came together to paint heartfelt murals in memory of Zubeen Da, celebrating his music, spirit, and legacy",
         artist: "snigdho & various artist(Reach out to me for credits)",
         status: "Marked",
+        city: "Jorhat",
         images: ["jorhat stadium.jpg"]
     },
     {
@@ -95,6 +100,7 @@ const muralData = [
         description: "A vibrant mural at Assam Engineering College pays tribute to Zubeen Garg and the classic film মন যায় shot on its campus.",
         artist: "Reachout for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["AEC guwahti.jpg"]
     },
     {
@@ -105,6 +111,7 @@ const muralData = [
         description: "A mesmerizing mural of Zubeen Da singing in the depths of the ocean, symbolizing how his voice flows endlessly like waves. It reflects the depth of his music timeless, soulful, and boundless like the ocean itself.",
         artist: "Runal & team",
         status: "Marked",
+        city: "Tezpur",
         images: ["dolobari.png"]
     },
     {
@@ -115,6 +122,7 @@ const muralData = [
         description: "A direct translation of his soul onto the wall. This mural shows Zubeen Da in his element guitar in hand and mic to his lips, a true rockstar whose music and spirit have weathered every storm. Forever our anthem",
         artist: "Chitli & team",
         status: "Marked",
+        city: "Dibrugarh",
         images: ["Dibrugarh_Mural.png"]
     },
     {
@@ -125,6 +133,7 @@ const muralData = [
         description: "A vibrant caricature of Zubeen Garg, capturing his rockstar energy and soulful Assamese spirit. His expressive charm reflects the heartbeat of Assam through music and passion",
         artist: "Navajit Changmai",
         status: "Marked",
+        city: "Sivasagar",
         images: ["Lahoty_petrolpump.jpg"]
     },
     {
@@ -135,6 +144,7 @@ const muralData = [
         description: "A soulful mural of Zubeen Da featuring the lyrics of his beloved song “Mayabini,” the tune he wished to be played when he will not be among us.",
         artist: "Daniel Zorian",
         status: "Marked",
+        city: "Lakhimpur",
         images: ["mural_Daniel_Zorian.png"]
     },
     {
@@ -145,6 +155,7 @@ const muralData = [
         description: "A bold and dynamic mural of Colonel Zubeen Da, capturing his larger-than-life persona and commanding presence.",
         artist: "Reachout for credit",
         status: "Marked",
+        city: "Ghorua",
         images: ["Ghorua_Juti_Hotel_Mural.png"]
     },
     {
@@ -155,6 +166,7 @@ const muralData = [
         description: "The artwork celebrates his fearless spirit, musical legacy, and the enduring impact he has left on fans and culture alike.",
         artist: "Mino_patir",
         status: "Marked",
+        city: "Lakhimpur",
         images: ["Gogamukh_Mural.png"]
     },
     {
@@ -165,6 +177,7 @@ const muralData = [
         description: "A vibrant mural of Zubeen Da set against the backdrop of Assam’s map, symbolizing his deep roots and everlasting connection to his homeland",
         artist: "Reachout for credit",
         status: "Marked",
+        city: "Lakhimpur",
         images: ["Lakhimpur_Girls_ College.png"]
     },
     {
@@ -175,6 +188,7 @@ const muralData = [
         description: "On a staircase of keys, Zubeen Da walks to the skies, his music lifting souls where eternity lies",
         artist: "Reachout for credit",
         status: "Marked",
+        city: "Demow",
         images: ["Demow_mural.jpg"]
     },
     {
@@ -185,6 +199,7 @@ const muralData = [
         description: "His voice echoes through the concrete",
         artist: "Mohibul",
         status: "Marked",
+        city: "Sivasagar",
         images: ["Joysagar_Bustand_mural.jpg", "Joysagar_Bustand_mural(2).jpg"]
     },
     {
@@ -195,6 +210,7 @@ const muralData = [
         description: "Passion, poetry, and performance. This surreal mural perfectly captures the magnetic aura of Zubeen Da",
         artist: "Himdipta kakati",
         status: "Marked",
+        city: "Dudhnoi",
         images: ["Dudhnoi_mural_1.jpg", "Dudhnoi mural_2.jpg"]
     },
     {
@@ -205,6 +221,7 @@ const muralData = [
         description: "তেওঁৰ ডটোৰাই গোধূলিত মায়াবিনী গুণগুণায়,আৰু প্ৰতিটো প্ৰভাতত জিয়া ৰে কাণত কাণে কয় এটা গান,যাৰ অন্ত নাই।",
         artist: "Imam Ali",
         status: "Marked",
+        city: "Guwahati",
         images: ["Imam_ali.jpg", "Imam_ali_2.jpg"]
     },
     {
@@ -215,6 +232,7 @@ const muralData = [
         description: "Against the striking canvas, Zubeen Da's intense spirit is immortalized alongside the evocative মায়াবিনী ৰাতিৰ বুকুত। In this silent tribute, his unspoken promise resonates: নিজানৰ গান মোৰ শেষ হ’ব ভাবোঁ তোমাৰ বুকুত। A testament to a voice that forever resides in countless hearts.",
         artist: "Kapil Das & Team",
         status: "Marked",
+        city: "Guwahati",
         images: ["GU_market.jpg"]
     },
     {
@@ -225,6 +243,7 @@ const muralData = [
         description: "a visual playlist of the heartbeat of Assam. This wall is a tapestry woven from the threads of his music.",
         artist: "Kapil Das",
         status: "Marked",
+        city: "Guwahati",
         images: ["Bt campus, Guwahati uni.png"]
     },
     {
@@ -235,6 +254,7 @@ const muralData = [
         description: "a swirling constellation of lyrics and album names. Stand as stark banners, reflecting the singer's twin loves: music's gentle soul and the fearless, outspoken spirit that gave voice to his people.",
         artist: "Kapil Das & Shankar Sharma",
         status: "Marked",
+        city: "Rangia",
         images: ["rangia college.jpg"]
     },
     {
@@ -245,6 +265,7 @@ const muralData = [
         description: "The soul of the star who never forgot the soil. Donning his signature hat and a turquoise bead necklace, Zubeen Da emerges from a fiery, earth-toned backdrop. The inscription beside him whispers a line of eternal affection: তুমি যেন পপীয়া তৰা (You are like a guiding star).",
         artist: "Ojantric",
         status: "Marked",
+        city: "Rangia",
         images: ["Rangia flyover.jpg"]
     },
     {
@@ -255,6 +276,7 @@ const muralData = [
         description: "Against a deep, nocturnal blue, the youthful rocker stands- the rebel poet with his keyboard. The wind of his music sweeps across the wall, carrying lines of lyrics that speak to the heart of every Assamese",
         artist: "Ojantric",
         status: "Marked",
+        city: "Rangia",
         images: ["Rangia mural.jpg"]
     },
     {
@@ -265,6 +287,7 @@ const muralData = [
         description: "The flyover walls are alive with the charismatic gaze and golden shine of Zubeen Da.",
         artist: "Dhruvajyoti_Dutta & Mousum_Gogoi",
         status: "Marked",
+        city: "Jorhat",
         images: ["Janji_Mural_3.jpg"]
     },
     {
@@ -275,6 +298,7 @@ const muralData = [
         description: "This mural captures the quintessential rock star performer. Zubeen Da is shown in a casual hat and t-shirt, smiling warmly into the microphone, embodying the energy and personal connection he shared with his audience at every live show",
         artist: "Satyajit_Boruah",
         status: "Marked",
+        city: "Jorhat",
         images: ["Janji_Mural_2.jpg"]
     },
     {
@@ -285,6 +309,7 @@ const muralData = [
         description: "A bold, larger-than-life portrait showing Zubeen Da's dramatic flair",
         artist: "Gyan_Deep_Barman",
         status: "Marked",
+        city: "Jorhat",
         images: ["Janji_Mural_1.jpg"]
     },
     {
@@ -295,6 +320,7 @@ const muralData = [
         description: "Eternal light, eternal tune Zubeen da",
         artist: "Wingmon",
         status: "Marked",
+        city: "Morigaon",
         images: ["Morigaon mural(1).jpg", "Morigaon mural.jpg"]
     },
     {
@@ -305,6 +331,7 @@ const muralData = [
         description: "A smile that lights the darkness, a voice that calms the storm. His spirit, painted bright against the yellow of hope, lives here forever.",
         artist: "Marcel",
         status: "Marked",
+        city: "Guwahati",
         images: ["SNBC_hostel.jpg"]
     },
     {
@@ -315,6 +342,7 @@ const muralData = [
         description: "An intense portrait of a younger Zubeen Da, featuring his trademark wild hair and a piercing, unforgettable gaze. The expressive, rough brushwork captures the raw passion and energetic spirit of the legendary Zubeen Da.",
         artist: "Reachout for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["RKB_hostel.jpg"]
     },
     {
@@ -325,6 +353,7 @@ const muralData = [
         description: "Captured in monochrome, the timeless charisma of Zubeen Da . This mural perfectly represents the prime era of Zubeen Da, reminding us why he is the undisputed voice and style icon for millions. Iconic and unshakeable.",
         artist: "Lukmon Ron",
         status: "Marked",
+        city: "Guwahati",
         images: ["Dispur_mural_3.jpg", "Dispur_mural_4.jpg"]
     },
     {
@@ -335,6 +364,7 @@ const muralData = [
         description: "Capturing the charisma of Colonel Zubeen Da, one stroke at a time. The street as a canvas for our legend.",
         artist: "Ankush Nath",
         status: "Marked",
+        city: "Dibrugarh",
         images: ["Dikhow-railBridge-pillars.jpg"]
     },
     {
@@ -345,6 +375,7 @@ const muralData = [
         description: "Located in a place of daily community interaction, this piece transforms a simple wall into a cherished spot. It doesn't rely on academic perfection; it relies on collective love. This mural serves as a constant, affectionate reminder of Zubeen Da's place in our hearts, proving that the deepest connections are often formed by passion, not polish. It is special simply because it is for him.",
         artist: "Tridip",
         status: "Marked",
+        city: "Bishwanath",
         images: ["Baidew_hotel_mural.jpg"]
     },
     {
@@ -355,6 +386,7 @@ const muralData = [
         description: "In a city defined by its constant motion, this mural acts as a vibrant, inescapable pause. It turns the anonymous underpass into a spontaneous and public shrine. It is a daily tribute by the community to a musician whose voice has been the soundtrack to generations, symbolizing the enduring power of art and culture to thrive even in the most functional, industrial corners of the city.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["Khanapara_mural.jpg", "Khanapara_mural1.jpg"]
     },
     {
@@ -365,6 +397,7 @@ const muralData = [
         description: "Fueling the next generation of revolutionaries. Zubeen Da takes center stage at B. Borooah College.",
         artist: "Marcel Baruah",
         status: "Marked",
+        city: "Guwahati",
         images: ["B.Borooah_mural1.jpg", "B.Borooah_mural.jpg"]
     },
     {
@@ -375,6 +408,7 @@ const muralData = [
         description: "Beneath the roar of the Ganesguri Flyover, this iconic mural stands as a silent vow. Zubeen Da our 'Comrade,' is captured with an eternal gaze behind his sunglasses, his image bathed in the light of a perpetual sunburst a symbol of the hope he ignited. The powerful declaration, \"COMRADE NEVER DIE,\" isn't just graffiti; it is the collective, heart-felt promise of his fans that the spirit of the rebel, the poet, and the legend lives on, always watching over the city he loved.",
         artist: "LYKO",
         status: "Marked",
+        city: "Guwahati",
         images: ["Comrade_zubeen_da.jpg"]
     },
     {
@@ -385,6 +419,7 @@ const muralData = [
         description: "Situated on a busy roadside wall, the Mayabini mural transforms the concrete barrier into an open-air canvas of adoration. Framed by a simple metal fence like a stage, this arresting tribute breaks through the urban chaos, offering a moment of profound cultural pride and reminding every passerby of Zubeen Da's enduring, mystical charm.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["Guwahati_port1.jpg", "Guwahati_port2.jpg"]
     },
     {
@@ -395,6 +430,7 @@ const muralData = [
         description: "A dual-image mural featuring two representations of Zubeen Da. The left side is a silhouette in warm tones, arm raised high in rockstar triumph, labeled \"Goldie da\" (his nickname). The right side is a more realistic, emotional portrayal of him singing, with colors split between dark and vibrant hues. This mural captures both the energetic performer and the pensive vibe of Zubeen Da",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["Guwahati_port3.jpg", "Guwahati_port4.jpg"]
     },
     {
@@ -405,6 +441,7 @@ const muralData = [
         description: "A striking portrait capturing the intensity of Zubeen Da's live performance. He is depicted in a wide-brimmed hat, leaning into the mic amidst rich, warm colors. The prominent Assamese lyric, \"গান গোৱা\" (Gaan gua), serves as a direct call to the viewer to \"Remember his Songs\" and the emotions it carries.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["Guwahati_port5.jpg"]
     },
     {
@@ -415,6 +452,7 @@ const muralData = [
         description: "A dramatic, side-profile portrait of Zubeen Da, wearing sunglasses and featuring his signature long, flowing hair painted against a vivid blue background. The figure is surrounded by stylized white waves or swirling energy, emphasizing his rockstar persona and connection to the waves.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["Guwahati_port6.jpg", "Guwahati_port7.jpg"]
     },
     {
@@ -425,6 +463,7 @@ const muralData = [
         description: "See the 'Voice on the Wall.' A massive, unforgettable 12x15 ft mural celebrating Zubeen Da's life and legacy, painted with passion by Gauripur's finest local artists. A must-see cultural landmark.",
         artist: "Bishnu Prasad Ray, Kalyani Adhikary, Nabajyoti Barman, Hemanta Ray, Tanmay Roy, Nayan Roy",
         status: "Marked",
+        city: "Gauripur",
         images: ["Gauripur_mural.jpg"]
     },
     {
@@ -435,6 +474,7 @@ const muralData = [
         description: "A powerful, high-contrast mural celebrating Zubeen Da's dual identity as a musical icon and a social revolutionary (\"Comrade Zubeen\"). Depicted in military-style attire, the artist holds a microphone labeled 'ZUBEEN' as a symbol of resistance, the artwork is a potent tribute to his unwavering spirit of defiance.",
         artist: "Pankaj pao, Dhritismita talukdar, Sumit Sarkar, Irean Ansari, Kalpa Jyoti Das, hrishikesh Das, Thinshu Gogoi",
         status: "Marked",
+        city: "Guwahati",
         images: ["Lighthouse_mural1.jpg", "Lighthouse_mural.jpg"]
     },
     {
@@ -445,6 +485,7 @@ const muralData = [
         description: "A romantic and expressive portrait of Zubeen Da, focusing on his identity as a young musical poet. Featuring his signature long hair, the mural is surrounded by floating musical notes and song lyrics, and is titled 'Mayabini' (Enchanting), celebrating the emotional depth of his melodies and lyrics.",
         artist: "tridip_arts, ms.pigments, ujaswata, zumon___, _akshayyyy.yy, rahul_thakuria",
         status: "Marked",
+        city: "Guwahati",
         images: ["Bhakti_kutir_mural.jpg"]
     },
     {
@@ -455,6 +496,7 @@ const muralData = [
         description: "Here is a vibrant, multi-panel street art tribute to Zubeen Da, celebrating his multifaceted persona and enduring legacy. It combines realistic portraiture with energetic graffiti and symbolic elements over a continuous stretch of wall.",
         artist: "Neelim Mahanta",
         status: "Marked",
+        city: "Guwahati",
         images: ["Triveni_path_mural1.jpg", "Triveni_path_mural.jpg"]
     },
     {
@@ -465,6 +507,7 @@ const muralData = [
         description: "A beautifully cheerful mural of Zubeen Da featuring his wide, engaging smile against a vibrant, abstract backdrop. The artwork is dominated by a profound lyrical quote expressing his desire to embrace the sky within his heart and find peace in the depth of the ocean. This piece celebrates Zubeen Da's emotional complexity, portraying him as a poet caught between the boundless vastness of the heavens and the silent mystery of the deep.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Palasbari",
         images: ["Palasbari_mural.jpg", "Palasbari_mural1.jpg"]
     },
     {
@@ -475,6 +518,7 @@ const muralData = [
         description: "A striking portrait on a flyover wall, depicting Zubeen Da with a pensive expression, holding a guitar and draped in a traditional gamusa. This artwork, marked '1972–∞', beautifully symbolizes his eternal legacy and his unique fusion of rock music with Assamese cultural heritage.",
         artist: "Testsketcher",
         status: "Marked",
+        city: "Guwahati",
         images: ["Testsketcher_mural.jpg"]
     },
     {
@@ -485,6 +529,7 @@ const muralData = [
         description: "A grand, intimate mural adorning the wall of a cafe. The artwork features a stunning dual portrait: the powerful, fedora wearing rockstar singing into the mic, juxtaposed with a softer, youthful portrait. Framed by rich red roses and a dark, moody atmosphere, this mural captures the two sides of Zubeen Da's artistry - the passionate performer and the soulful poet creating a perfect ambiance for a lyrical lounge.",
         artist: "Reach out for credit",
         status: "Marked",
+        city: "Guwahati",
         images: ["D'backyard_cafe.jpg"]
     },
     {
@@ -495,6 +540,7 @@ const muralData = [
         description: "A bright, celebratory mural featuring Zubeen Da with an infectious smile and a traditional blue Assamese paga. Painted in vivid yellow and green, the artwork is crowned with the phrase \"জয় জুবিন দা\" (Joi Zubeen Da), serving as a powerful, Cultural Shrine of affection and respect for the beloved artist.",
         artist: "Gautam Das",
         status: "Marked",
+        city: "Guwahati",
         images: ["Sinha_lodge.jpg"]
     },
 ];

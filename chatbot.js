@@ -556,27 +556,10 @@ class MuralChatbot {
             return;
         }
 
-        // Filter murals by matching location descriptions with city mapping
+        // Filter murals by city field (much simpler and more reliable!)
         const filteredMurals = muralData.filter(mural => {
-            if (!mural.locationDesc) return false;
-
-            const locDesc = mural.locationDesc.toLowerCase();
-
-            // First check direct city keyword match
-            if (cityKeywords[matchedCity]) {
-                for (const keyword of cityKeywords[matchedCity]) {
-                    if (locDesc.includes(keyword)) return true;
-                }
-            }
-
-            // Then check location city mapping
-            for (const [location, city] of Object.entries(locationCityMap)) {
-                if (city === matchedCity && locDesc.includes(location)) {
-                    return true;
-                }
-            }
-
-            return false;
+            if (!mural.city) return false;
+            return mural.city.toLowerCase() === matchedCity.toLowerCase();
         });
 
         if (filteredMurals.length === 0) {
