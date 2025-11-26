@@ -117,7 +117,7 @@ class MuralChatbot {
         } else {
             document.body.insertAdjacentHTML('beforeend', chatbotHTML);
         }
-        
+
         // Make chatbot accessible globally
         window.muralChatbot = this;
     }
@@ -221,20 +221,20 @@ class MuralChatbot {
     shareFact() {
         const factsData = this.getMuralFacts();
         const allFacts = factsData.facts;
-        
+
         // Get a random fact that hasn't been shared recently
         let randomFact;
         do {
             randomFact = allFacts[Math.floor(Math.random() * allFacts.length)];
         } while (this.factsShared.includes(randomFact.fact) && this.factsShared.length < allFacts.length);
-        
+
         this.factsShared.push(randomFact.fact);
         if (this.factsShared.length > 5) this.factsShared.shift();
-        
+
         // Extract search keywords from the fact
         const searchQuery = this.extractSearchTerms(randomFact.fact);
         const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
-        
+
         const response = `
             <strong>${randomFact.emoji} Did you know?</strong>
             <p>${randomFact.fact}</p>
@@ -248,7 +248,7 @@ class MuralChatbot {
             </div>
             <p style="font-size: 0.75rem; color: #999; margin-top: 8px;">💡 Click "Verify on Google" to cross-check this fact or learn more!</p>
         `;
-        
+
         this.addMessage(response, 'bot');
     }
 
@@ -259,7 +259,7 @@ class MuralChatbot {
             'Assam',
             'murals'
         ];
-        
+
         // Add specific terms from the fact
         if (fact.toLowerCase().includes('recorded') || fact.toLowerCase().includes('songs')) {
             searchTerms.push('songs');
@@ -276,7 +276,7 @@ class MuralChatbot {
         if (fact.toLowerCase().includes('legacy')) {
             searchTerms.push('legacy');
         }
-        
+
         return searchTerms.join(' ');
     }
 
@@ -297,10 +297,10 @@ class MuralChatbot {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                
+
                 // Identify city from coordinates
                 const city = this.identifyCityFromCoordinates(this.userLocation.lat, this.userLocation.lng);
-                
+
                 this.showNearbyMurals(city);
             },
             (error) => {
@@ -322,7 +322,12 @@ class MuralChatbot {
             sivasagar: { lat: 26.98, lng: 94.65, radius: 0.6 },
             tezpur: { lat: 26.62, lng: 92.83, radius: 0.6 },
             morigaon: { lat: 26.35, lng: 92.25, radius: 0.6 },
-            dhemaji: { lat: 27.50, lng: 93.90, radius: 0.6 }
+            dhemaji: { lat: 27.50, lng: 93.90, radius: 0.6 },
+            rangia: { lat: 26.44, lng: 91.62, radius: 0.5 },
+            dudhnoi: { lat: 25.98, lng: 90.73, radius: 0.5 },
+            gauripur: { lat: 26.08, lng: 89.97, radius: 0.5 },
+            bishwanath: { lat: 26.72, lng: 93.15, radius: 0.5 },
+            nazira: { lat: 26.92, lng: 94.73, radius: 0.4 }
         };
 
         let closestCity = 'guwahati';
@@ -378,12 +383,12 @@ class MuralChatbot {
         }
 
         let response = '';
-        
+
         // Add location identification if available
         if (identifiedCity) {
             response += `<p style="color: #fdbb2d; font-style: italic; margin-bottom: 8px;">📍 You are in <strong>${identifiedCity.toUpperCase()}</strong></p>`;
         }
-        
+
         response += '<strong>🎨 5 Nearest Murals to You:</strong><div style="margin: 12px 0; display: flex; flex-direction: column; gap: 8px;">';
         muralsWithDistance.forEach((mural, index) => {
             // Use the decimal lat/lng already in the mural object (converted earlier)
@@ -416,74 +421,89 @@ class MuralChatbot {
             'dispur': 'guwahati',
             'flyover': 'guwahati',
             'guwahati': 'guwahati',
-            'cotton university': 'guwahati',
+            'cotton': 'guwahati',
             'rajaduwar': 'guwahati',
-            'guwahati university': 'guwahati',
-            'rangia': 'guwahati',
+            'university': 'guwahati',
             'khanapara': 'guwahati',
             'palasbari': 'guwahati',
-            'light house': 'guwahati',
             'lighthouse': 'guwahati',
+            'light house': 'guwahati',
             'bhakti': 'guwahati',
             'triveni': 'guwahati',
             'rajdhani': 'guwahati',
             'sinha lodge': 'guwahati',
-            'vishal mega': 'guwahati',
+            'vishal': 'guwahati',
             'backyard': 'guwahati',
             'ganesguri': 'guwahati',
             'b. borooah': 'guwahati',
             'borooah': 'guwahati',
-            'dudhnoi': 'guwahati',
-            
+            'aec': 'guwahati',
+            'engineering college': 'guwahati',
+            'hostel': 'guwahati',
+
             // Lakhimpur District
             'north lakhimpur': 'lakhimpur',
             'north laximpur': 'lakhimpur',
             'lakhimpur': 'lakhimpur',
+            'laximpur': 'lakhimpur',
             'gogamukh': 'lakhimpur',
-            'gauripur': 'lakhimpur',
-            'demow': 'lakhimpur',
-            'bishwanath': 'lakhimpur',
-            
+
             // Jorhat
             'jorhat': 'jorhat',
-            'gandi park': 'jorhat',
+            'gandi': 'jorhat',
+            'gandhi': 'jorhat',
             'stadium': 'jorhat',
-            
+            'jhanji': 'jorhat',
+            'jamuguri': 'jorhat',
+
             // Dibrugarh
             'dibrugarh': 'dibrugarh',
-            'convoy road': 'dibrugarh',
-            'railway bridge': 'dibrugarh',
+            'convoy': 'dibrugarh',
+            'railway': 'dibrugarh',
             'dikhow': 'dibrugarh',
-            
+
             // Sivasagar
             'sivasagar': 'sivasagar',
             'lahoty': 'sivasagar',
             'joysagar': 'sivasagar',
             'bustand': 'sivasagar',
-            
+            'nazira': 'nazira',
+
             // Tezpur
             'tezpur': 'tezpur',
             'dolabari': 'tezpur',
-            
+
             // Morigaon
             'morigaon': 'morigaon',
             'bihutoli': 'morigaon',
-            
+
             // Dhemaji
             'dhemaji': 'dhemaji',
             'dimow': 'dhemaji',
-            'engineering college': 'guwahati' // AEC is in Guwahati
+
+            // Others
+            'rangia': 'rangia',
+            'dudhnoi': 'dudhnoi',
+            'gauripur': 'gauripur',
+            'bishwanath': 'bishwanath',
+            'demow': 'demow'
         };
 
         const cityKeywords = {
-            guwahati: ['guwahati', 'dispur'],
+            guwahati: ['guwahati', 'dispur', 'kamrup'],
             jorhat: ['jorhat'],
-            lakhimpur: ['lakhimpur', 'north lakhimpur'],
+            lakhimpur: ['lakhimpur', 'laximpur'],
             dibrugarh: ['dibrugarh'],
-            sivasagar: ['sivasagar'],
+            sivasagar: ['sivasagar', 'sibsagar'],
             morigaon: ['morigaon'],
             dhemaji: ['dhemaji'],
-            tezpur: ['tezpur']
+            tezpur: ['tezpur', 'sonitpur'],
+            rangia: ['rangia'],
+            dudhnoi: ['dudhnoi'],
+            gauripur: ['gauripur'],
+            bishwanath: ['bishwanath', 'biswanath'],
+            nazira: ['nazira'],
+            demow: ['demow']
         };
 
         let matchedCity = null;
@@ -494,6 +514,16 @@ class MuralChatbot {
             if (keywords.some(keyword => lowerQuery.includes(keyword))) {
                 matchedCity = city;
                 break;
+            }
+        }
+
+        // If no direct city match, check if query mentions a location from our map
+        if (!matchedCity) {
+            for (const [location, city] of Object.entries(locationCityMap)) {
+                if (lowerQuery.includes(location)) {
+                    matchedCity = city;
+                    break;
+                }
             }
         }
 
@@ -509,6 +539,7 @@ class MuralChatbot {
                         <button onclick="window.muralChatbot.quickAction('Show murals in Dibrugarh')" style="background: #816799; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Dibrugarh</button>
                         <button onclick="window.muralChatbot.quickAction('Show murals in Sivasagar')" style="background: #f4a460; color: #1a0a2e; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Sivasagar</button>
                         <button onclick="window.muralChatbot.quickAction('Show murals in Tezpur')" style="background: #3a9d7d; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Tezpur</button>
+                        <button onclick="window.muralChatbot.quickAction('Show murals in Rangia')" style="background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold;">Rangia</button>
                     </div>
                 </div>
             `;
@@ -519,21 +550,23 @@ class MuralChatbot {
         // Filter murals by matching location descriptions with city mapping
         const filteredMurals = muralData.filter(mural => {
             if (!mural.locationDesc) return false;
-            
+
             const locDesc = mural.locationDesc.toLowerCase();
-            
+
             // First check direct city keyword match
-            for (const keyword of cityKeywords[matchedCity]) {
-                if (locDesc.includes(keyword)) return true;
+            if (cityKeywords[matchedCity]) {
+                for (const keyword of cityKeywords[matchedCity]) {
+                    if (locDesc.includes(keyword)) return true;
+                }
             }
-            
+
             // Then check location city mapping
             for (const [location, city] of Object.entries(locationCityMap)) {
                 if (city === matchedCity && locDesc.includes(location)) {
                     return true;
                 }
             }
-            
+
             return false;
         });
 
@@ -581,9 +614,9 @@ class MuralChatbot {
 
         // Get specific facts about the mural
         const specificFact = this.getMuralSpecificFacts(muralName.name);
-        
+
         const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(muralName.name + ' Zubeen Garg mural')}`;
-        
+
         let response = `
             <strong>🎨 ${muralName.name}</strong>
             <p><strong>📍 Location:</strong> ${muralName.locationDesc}</p>
@@ -591,11 +624,11 @@ class MuralChatbot {
             <p><strong>👤 Artist(s):</strong> ${muralName.artist}</p>
             <p><strong>📸 Images:</strong> ${muralName.images.length} available</p>
         `;
-        
+
         if (specificFact) {
             response += `<p><strong>💡 Fun Fact:</strong> ${specificFact}</p>`;
         }
-        
+
         response += `
             <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
                 <button onclick="window.open('${googleSearchUrl}', '_blank')" style="background: #4285F4; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">
@@ -656,7 +689,7 @@ class MuralChatbot {
     }
 
     findMuralByName(query) {
-        return muralData.find(mural => 
+        return muralData.find(mural =>
             query.toLowerCase().includes(mural.name.toLowerCase()) ||
             mural.name.toLowerCase().includes(query.toLowerCase())
         );
@@ -667,7 +700,7 @@ class MuralChatbot {
         const R = 6371; // Earth's radius in km
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a = 
+        const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -698,7 +731,7 @@ class MuralChatbot {
         // Convert coordinates if they're DMS format
         const decLat = typeof lat === 'number' ? lat : dmsToDecimal(lat);
         const decLng = typeof lng === 'number' ? lng : dmsToDecimal(lng);
-        
+
         if (!decLat || !decLng) {
             console.error('Invalid coordinates:', { lat, lng });
             this.addMessage('❌ Invalid location coordinates. Please try again.', 'bot');
@@ -798,7 +831,7 @@ class MuralChatbot {
 }
 
 // Initialize chatbot when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (typeof muralData !== 'undefined') {
         new MuralChatbot();
     }
