@@ -518,12 +518,62 @@ class MuralChatbot {
         let matchedCity = null;
         const lowerQuery = query.toLowerCase();
 
-        // First check direct keywords
-        for (const [city, keywords] of Object.entries(cityKeywords)) {
-            if (keywords.some(keyword => lowerQuery.includes(keyword))) {
-                matchedCity = city;
-                break;
+
+        // Helper function for fuzzy string matching (handles typos)
+        const fuzzyMatch = (str1, str2) => {
+            const s1 = str1.toLowerCase();
+            const s2 = str2.toLowerCase();
+
+            // Exact match
+            if (s1 === s2) return 1.0;
+
+            // Contains match
+            if (s1.includes(s2) || s2.includes(s1)) return 0.8;
+
+            // Levenshtein distance for typo tolerance
+            const len1 = s1.length;
+            const len2 = s2.length;
+            const matrix = [];
+
+            for (let i = 0; i <= len1; i++) {
+                matrix[i] = [i];
             }
+            for (let j = 0; j <= len2; j++) {
+                matrix[0][j] = j;
+            }
+
+            for (let i = 1; i <= len1; i++) {
+                for (let j = 1; j <= len2; j++) {
+                    const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+
+            const distance = matrix[len1][len2];
+            const maxLen = Math.max(len1, len2);
+            return 1 - (distance / maxLen);
+        };
+
+        // First check direct keywords with fuzzy matching
+        let bestMatch = null;
+        let bestScore = 0;
+
+        for (const [city, keywords] of Object.entries(cityKeywords)) {
+            for (const keyword of keywords) {
+                const score = fuzzyMatch(lowerQuery, keyword);
+                if (score > bestScore && score > 0.6) { // 60% similarity threshold
+                    bestScore = score;
+                    bestMatch = city;
+                }
+            }
+        }
+
+        if (bestMatch) {
+            matchedCity = bestMatch;
         }
 
         // If no direct city match, check if query mentions a location from our map
