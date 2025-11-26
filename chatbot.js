@@ -201,9 +201,18 @@ class MuralChatbot {
         const lowerQuery = query.toLowerCase();
 
         // Detect intent
+        // Detect intent
+        const cityNames = [
+            'guwahati', 'jorhat', 'lakhimpur', 'dibrugarh', 'sivasagar',
+            'tezpur', 'morigaon', 'dhemaji', 'rangia', 'dudhnoi',
+            'gauripur', 'bishwanath', 'nazira', 'demow', 'assam'
+        ];
+
+        const hasCityName = cityNames.some(city => lowerQuery.includes(city));
+
         if (lowerQuery.includes('near me') || lowerQuery.includes('closest') || lowerQuery.includes('nearby')) {
             this.handleNearbyQuery();
-        } else if (lowerQuery.includes('guwahati') || lowerQuery.includes('assam') || lowerQuery.includes('city') || lowerQuery.includes('explore')) {
+        } else if (hasCityName || lowerQuery.includes('city') || lowerQuery.includes('explore') || lowerQuery.includes('location')) {
             this.handleLocationQuery(query);
         } else if (lowerQuery.includes('fact') || lowerQuery.includes('interesting') || lowerQuery.includes('cool')) {
             this.shareFact();
