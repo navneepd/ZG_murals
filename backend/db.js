@@ -2,8 +2,8 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Neon PostgreSQL connection string placeholder or environment variable
-const connectionString = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_placeholder@ep-cool-sample-a5x8.us-east-2.aws.neon.tech/neondb?sslmode=require';
+// Neon PostgreSQL connection string from environment variable or provided pooler URL
+const connectionString = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_uBSvYf0cMP4L@ep-jolly-math-b3375j4x-pooler.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require';
 
 const pool = new Pool({
     connectionString: connectionString,

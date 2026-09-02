@@ -19,7 +19,7 @@ Real-time Live Leaderboard backend powered by Node.js, Express, Socket.io, and N
 2. Configure environment variables (create `.env`):
    ```env
    PORT=3000
-   DATABASE_URL=postgresql://neondb_owner:YOUR_NEON_PASSWORD@ep-cool-sample-a5x8.us-east-2.aws.neon.tech/neondb?sslmode=require
+   DATABASE_URL=postgresql://neondb_owner:npg_uBSvYf0cMP4L@ep-jolly-math-b3375j4x-pooler.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
    ```
 
 3. Run SQL Schema on Neon Console:
