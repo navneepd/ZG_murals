@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zubeen's Chords | Song Guessing Challenge</title>
+    <meta name="description" content="Test your Zubeen Garg music knowledge in a fast-paced 10-second song guessing game and compete on the live leaderboard.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Socket.io Client -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="game-page-body">
+    <div class="landing-background-overlay"></div>
+
+    <div class="container game-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-icon">🎸</span> ZG Tribute Hub
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Home</a>
+                <a href="map.html" class="nav-link">🗺️ Ballad Trail</a>
+                <a href="game.html" class="nav-link active">🎵 Zubeen's Chords</a>
+            </div>
+        </nav>
+
+        <!-- Main Game Layout -->
+        <div class="game-layout">
+            <!-- Game Main Card -->
+            <main class="game-card">
+                <div class="game-header">
+                    <div class="game-badge">🎵 Interactive Music Quiz</div>
+                    <h1 class="game-title">Zubeen's Chords</h1>
+                    <p class="game-subtitle">Listen to the 10-second snippet & guess the song!</p>
+                </div>
+
+                <!-- HUD Stats -->
+                <div class="game-hud">
+                    <div class="hud-item">
+                        <span class="hud-label">Score</span>
+                        <span class="hud-value" id="score-display">0</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">Streak</span>
+                        <span class="hud-value" id="streak-display">🔥 0</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">Round</span>
+                        <span class="hud-value" id="round-display">1 / 5</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">Time Left</span>
+                        <span class="hud-value timer-val" id="timer-display">10.0s</span>
+                    </div>
+                </div>
+
+                <!-- Audio Snippet Controller -->
+                <div class="audio-player-box">
+                    <div class="audio-visualizer-bars" id="audio-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+
+                    <button id="play-btn" class="play-btn">
+                        <span class="play-icon" id="play-icon">▶</span>
+                        <span class="play-text" id="play-text">Play Snippet (10s)</span>
+                    </button>
+
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" id="timer-progress"></div>
+                    </div>
+
+                    <!-- Hidden HTML5 Audio Element -->
+                    <audio id="game-audio" preload="auto"></audio>
+                </div>
+
+                <!-- Guess Input Section -->
+                <form id="guess-form" class="guess-form" onsubmit="return false;">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="guess-input" 
+                            class="guess-input" 
+                            placeholder="Type song name (e.g., Ya Ali, Mon Jaai, Mayabini)..." 
+                            autocomplete="off"
+                        />
+                        <button type="submit" id="submit-guess-btn" class="submit-guess-btn">Submit 🎵</button>
+                    </div>
+
+                    <div class="game-action-buttons">
+                        <button type="button" id="hint-btn" class="secondary-btn">💡 Need Hint (-20 pts)</button>
+                        <button type="button" id="skip-btn" class="secondary-btn">⏭️ Skip Song</button>
+                    </div>
+                </form>
+
+                <!-- Feedback & Hint Box -->
+                <div id="guess-feedback" class="feedback-box"></div>
+                <div id="hint-box" class="hint-box hidden"></div>
+            </main>
+
+            <!-- Leaderboard Sidebar -->
+            <aside class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <h3>🏆 Live Leaderboard</h3>
+                    <div class="status-indicator" id="connection-status" title="Connecting to backend...">
+                        <span class="status-dot offline" id="status-dot"></span>
+                        <span class="status-text" id="status-text">Local Mode</span>
+                    </div>
+                </div>
+                
+                <p class="leaderboard-desc">Top players with highest chord guessing scores.</p>
+
+                <div class="leaderboard-list-wrapper">
+                    <ol class="leaderboard-list" id="leaderboard-list">
+                        <!-- Populated by JS -->
+                    </ol>
+                </div>
+
+                <div class="leaderboard-footer">
+                    <button id="submit-score-btn" class="leaderboard-action-btn" disabled>
+                        💾 Save Score to Leaderboard
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Submit High Score Modal -->
+    <div id="score-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal-btn" id="close-modal-btn">×</button>
+            <div class="modal-header">
+                <h2>🎉 Game Over!</h2>
+                <p>Great job! Submit your score to the global leaderboard.</p>
+            </div>
+            
+            <div class="final-score-card">
+                <div class="final-stat">
+                    <span class="lbl">Final Score</span>
+                    <span class="val" id="modal-final-score">0</span>
+                </div>
+                <div class="final-stat">
+                    <span class="lbl">Max Streak</span>
+                    <span class="val" id="modal-final-streak">0</span>
+                </div>
+            </div>
+
+            <form id="modal-score-form" class="modal-form">
+                <label for="player-name-input">Your Name / Handle:</label>
+                <input 
+                    type="text" 
+                    id="player-name-input" 
+                    class="modal-input" 
+                    placeholder="Enter your name (e.g. ZubeenFan99)" 
+                    maxlength="20"
+                    required
+                />
+                <button type="submit" class="modal-submit-btn">🚀 Submit to Leaderboard</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

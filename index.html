@@ -3,77 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zubeen Garg Murals Map</title>
+    <title>Zubeen Garg Tribute Hub | 1-Year Anniversary Memorial</title>
+    <meta name="description" content="A 1-Year Anniversary Tribute Hub dedicated to Assamese legend Zubeen Garg. Explore the Ballad Trail Mural Map and test your knowledge in Zubeen's Chords Song Guessing Game.">
     
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- MarkerCluster CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Ballad trail of Zubeen Garg's Murals</h1>
-            <p class="subtitle">Across the heartland of Assam</p>
-        </header>
-        
-        <div class="content">
-            <div class="map-container">
-                <div id="map"></div>
+<body class="landing-body">
+    <div class="landing-background-overlay"></div>
+    
+    <div class="container landing-container">
+        <!-- Navigation -->
+        <nav class="top-nav">
+            <a href="index.html" class="nav-brand">
+                <span class="nav-icon">🎸</span> ZG Tribute Hub
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">🏠 Home</a>
+                <a href="map.html" class="nav-link">🗺️ Ballad Trail</a>
+                <a href="game.html" class="nav-link">🎵 Zubeen's Chords</a>
             </div>
-            
-            <div class="info-panel">
-                <h2>Mural Information</h2>
-                
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-murals">0</div>
-                        <div class="stat-label">Total Murals</div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">✨ 1-Year Memorial Tribute Hub</div>
+            <h1 class="hero-headline">Remembering the Legend</h1>
+            <p class="hero-subheadline">
+                Honoring the timeless melody, fearless voice, and enduring legacy of <strong>Zubeen Garg</strong> across the heartland of Assam and beyond.
+            </p>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-card">
+                <div class="countdown-title">⏳ 1-Year Anniversary Memorial Countdown</div>
+                <div class="countdown-date">September 19, 2026</div>
+                <div class="countdown-grid" id="countdown-grid">
+                    <div class="time-box">
+                        <span class="time-number" id="days">00</span>
+                        <span class="time-label">Days</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="cities-count">0</div>
-                        <div class="stat-label">Cities & Towns</div>
+                    <div class="time-box">
+                        <span class="time-number" id="hours">00</span>
+                        <span class="time-label">Hours</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="artists-count">0</div>
-                        <div class="stat-label">Artists</div>
+                    <div class="time-box">
+                        <span class="time-number" id="minutes">00</span>
+                        <span class="time-label">Minutes</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="images-count">0</div>
-                        <div class="stat-label">Images</div>
+                    <div class="time-box">
+                        <span class="time-number" id="seconds">00</span>
+                        <span class="time-label">Seconds</span>
                     </div>
                 </div>
-                
-                <h3>Murals List</h3>
-                <div class="mural-list" id="mural-list">
-                    <!-- Mural list will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Hub Cards Section -->
+        <section class="hub-section">
+            <h2 class="section-title">Explore the Tribute Experience</h2>
+            <div class="hub-cards-grid">
+                <!-- Card 1: Map -->
+                <div class="hub-card" onclick="window.location.href='map.html'">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">📍</span>
+                    </div>
+                    <div class="card-badge">Geospatial Archive</div>
+                    <h3 class="card-title">The Ballad Trail</h3>
+                    <p class="card-description">
+                        Explore an interactive 3D geolocated map of over 47 sacred murals dedicated to Zubeen Da across Assam's highways, colleges, and public walls.
+                    </p>
+                    <div class="card-footer-action">
+                        <span class="action-text">Explore Interactive Map</span>
+                        <span class="action-arrow">→</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Game -->
+                <div class="hub-card feature-highlight" onclick="window.location.href='game.html'">
+                    <div class="card-icon-wrapper glow-gold">
+                        <span class="card-icon">🎵</span>
+                    </div>
+                    <div class="card-badge gold-badge">Live Interactive Game</div>
+                    <h3 class="card-title">Zubeen's Chords</h3>
+                    <p class="card-description">
+                        Test your music knowledge in a fast-paced 10-second song guessing challenge! Compete on the live global leaderboard.
+                    </p>
+                    <div class="card-footer-action gold-action">
+                        <span class="action-text">Play Song Challenge</span>
+                        <span class="action-arrow">→</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="legend">
-            <h3>About</h3>
-            <div class="legend-item">
-                <span>Across the heartland of Assam, public walls and concrete canvases bear the indelible mark of devotion to Zubeen Garg. These sites have transcended mere art to become sacred markers of collective memory, forming a widespread pilgrimage of the heart. Fans travel this 'Ballad Trail' to stand where the image of Zubeen Da is preserved, honoring the voice that articulated their joys, struggles, and identity. This outpouring of public reverence transforms these everyday locations into eternal sanctuaries of the Assamese soul, ensuring his spirit remains a living, breathing presence in the land he sang for. Click on markers to view details about each mural.</span>
+        </section>
+
+        <!-- Legacy Section -->
+        <section class="legacy-section">
+            <div class="legacy-card">
+                <h2 class="legacy-heading">A Soul That Defined Generations</h2>
+                <div class="legacy-quote">
+                    "নিজিনৰ গান মোৰ শেষ হ’ব ভাবোঁ তোমাৰ বুকুত..."
+                </div>
+                <div class="legacy-content">
+                    <p>
+                        Zubeen Garg is not merely a musician; he is the beating pulse of Assamese identity. With over 38,000 recorded songs spanning folk, rock, pop, and classical traditions, his artistic voice has provided solace, passion, and pride to millions.
+                    </p>
+                    <p>
+                        From iconic anthems like <em>Ya Ali</em> and <em>Mon Jaai</em> to endless romantic ballads and humanitarian crusades, Zubeen Garg transformed public spaces into sanctuaries of music. This tribute hub preserves his memory and brings fans together on this historic milestone.
+                    </p>
+                </div>
+                <div class="legacy-stats-strip">
+                    <div class="legacy-stat">
+                        <span class="legacy-num">38,000+</span>
+                        <span class="legacy-lbl">Recorded Songs</span>
+                    </div>
+                    <div class="legacy-stat">
+                        <span class="legacy-num">47+</span>
+                        <span class="legacy-lbl">Documented Murals</span>
+                    </div>
+                    <div class="legacy-stat">
+                        <span class="legacy-num">30+ Years</span>
+                        <span class="legacy-lbl">Musical Odyssey</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <footer>
-            <p>Coded by Navneep Das | created with Leaflet Maps</p>
-            <p>ক্ৰেডিট আৰু মোৰাল দাখিল কৰাৰ বাবে যোগাযোগ কৰক | @das.navneep09@gmail.com</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <p>ZG Tribute Hub | Coded with ❤️ by Navneep Das</p>
+            <p>1-Year Memorial Tribute | September 19, 2026</p>
         </footer>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- MarkerCluster JS -->
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-    
-    <!-- Project JavaScript Files -->
-    <script src="Murals-list.js"></script>
-    <script src="app.js"></script>
-    <script src="chatbot.js"></script>
+    <!-- Countdown Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // September 19, 2026 00:00:00 IST
+            const targetDate = new Date('2026-09-19T00:00:00+05:30').getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+
+                if (difference <= 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
 </body>
 </html>
