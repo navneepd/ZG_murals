@@ -491,10 +491,14 @@ class ZubeenChordsGame {
 
     handleModalScoreSubmit() {
         const nameInput = document.getElementById('player-name-input');
-        const playerName = nameInput.value.trim() || 'Anonymous Fan';
+        const emailInput = document.getElementById('playerEmail');
+
+        const playerName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Anonymous Fan';
+        const playerEmail = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : '';
 
         const payload = {
             player_name: playerName,
+            email: playerEmail,
             score: this.score,
             streak: this.maxStreak,
             played_at: new Date().toISOString()
@@ -502,7 +506,22 @@ class ZubeenChordsGame {
 
         if (this.socket && this.socket.connected) {
             this.socket.emit('submit_score', payload);
-        } else {
+        }
+
+        // Send via REST endpoint /api/score
+        try {
+            const backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                ? 'http://localhost:3000' 
+                : window.location.origin;
+
+            fetch(`${backendUrl}/api/score`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        } catch (e) {}
+
+        if (!this.socket || !this.socket.connected) {
             // Local fallback addition
             this.localLeaderboard.push(payload);
             this.localLeaderboard.sort((a, b) => b.score - a.score);

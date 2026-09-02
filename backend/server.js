@@ -49,12 +49,13 @@ async function getTopLeaderboard() {
 }
 
 // Helper: Save new score
-async function saveScore(playerName, score, streak) {
+async function saveScore(playerName, email, score, streak) {
     const cleanName = (playerName || 'Anonymous').substring(0, 50);
+    const cleanEmail = (email && typeof email === 'string') ? email.trim().substring(0, 255) : null;
     const scoreVal = parseInt(score, 10) || 0;
     const streakVal = parseInt(streak, 10) || 0;
 
-    // Update in-memory fallback cache
+    // Update in-memory fallback cache (strictly omit email from public leaderboard data)
     memoryLeaderboard.push({
         player_name: cleanName,
         score: scoreVal,
@@ -64,11 +65,11 @@ async function saveScore(playerName, score, streak) {
 
     try {
         await db.query(
-            `INSERT INTO zubeen_leaderboard (player_name, score, streak, played_at) 
-             VALUES ($1, $2, $3, NOW())`,
-            [cleanName, scoreVal, streakVal]
+            `INSERT INTO zubeen_leaderboard (player_name, email, score, streak, played_at) 
+             VALUES ($1, $2, $3, $4, NOW())`,
+            [cleanName, cleanEmail, scoreVal, streakVal]
         );
-        console.log(`💾 Score saved to Neon DB: ${cleanName} - ${scoreVal} pts`);
+        console.log(`💾 Score saved to Neon DB: ${cleanName} (${cleanEmail ? 'email provided' : 'no email'}) - ${scoreVal} pts`);
     } catch (err) {
         console.warn('⚠️ Could not insert into Neon DB, cached in-memory:', err.message);
     }
@@ -89,11 +90,11 @@ io.on('connection', async (socket) => {
     // Event: Receive new score submission
     socket.on('submit_score', async (data) => {
         console.log(`📩 Score submission received from ${socket.id}:`, data);
-        const { player_name, score, streak } = data || {};
+        const { player_name, email, score, streak } = data || {};
         
-        const updatedLeaderboard = await saveScore(player_name, score, streak);
+        const updatedLeaderboard = await saveScore(player_name, email, score, streak);
         
-        // Broadcast updated top 10 to ALL connected clients
+        // Broadcast updated top 10 to ALL connected clients (privacy preserved)
         io.emit('leaderboard_update', updatedLeaderboard);
     });
 
@@ -111,8 +112,8 @@ app.get('/api/leaderboard', async (req, res) => {
 });
 
 app.post('/api/score', async (req, res) => {
-    const { player_name, score, streak } = req.body || {};
-    const updatedLeaderboard = await saveScore(player_name, score, streak);
+    const { player_name, email, score, streak } = req.body || {};
+    const updatedLeaderboard = await saveScore(player_name, email, score, streak);
     
     // Broadcast via socket as well
     io.emit('leaderboard_update', updatedLeaderboard);
